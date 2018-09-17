@@ -1,7 +1,9 @@
-function invPRF_renameNiftis
-
+function renameNiftis(preFix,preScans)
+if ~exist('preScans','var') || preScans == [];
 preScans = {'3plane','ASSET','Inplane'};
-preFix = 'prf';
+end
+
+%preFix = 'prf';
 
 s = dir('*.nii.gz');
 fileNames = {s.name};
@@ -15,6 +17,7 @@ for n = 1:length(preScans)
 s = dir(['*' preScans{n} '*.nii.gz']);
 for m = 1:length(s)
    movefile(s(m).name,[preScans{n} '.nii.gz']); 
+   fprintf('Renamed %s to %s...\n',s(m).name,[preScans{n} '.nii.gz']);
 end
 end
 
@@ -29,4 +32,5 @@ epis = natsort({s.name}); % sorts according to number prefix
 
 for n = 1:length(epis)
    movefile(epis{n},[preFix num2str(n) '.nii.gz']); 
+   fprintf('Renamed %s to %s...\n',epis{n},[preFix num2str(n) '.nii.gz']);
 end

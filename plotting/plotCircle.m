@@ -6,7 +6,7 @@ function c = plotCircle(x,y,r,color,alphaVal,colorWhat)
 ang=0:0.01:2*pi; 
 xp=r*cos(ang);
 yp=r*sin(ang);
-c = patch(x+xp,-y+yp,color);
+c = patch(x+xp,y+yp,color);
 
 if alphaVal <0 || isnan(alphaVal)==1
 alphaVal = .0001; 

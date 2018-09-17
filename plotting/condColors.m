@@ -1,21 +1,26 @@
 function c = condColors(condNum,rainbow)
+% now allow call to more than one color returned
 if ~exist('rainbow','var')
     condColors = {[191 66 244]/255 [0 128 0]/255 [76 94 255]/255 [244 104 65]/255};
 else
     condColors = {
-        [0/360  1 1]     % red
-        [30/360 1 1]     % orange
-        [60/360 1 .92]  % yellow
-        [105/360 1 .9]   % green
-        [180/360 1 .9]  % light-blue
-        [240/360 1 .9]    % blue
-        [280/360 1 .75]    % purple
-        [305/360 1 .82]   % magenta
-        [1       1 1]    % red
+        [238 17 0]/255     % red
+        [255 153 51]/255     % orange
+        [208 195 16]/255   % yellow
+        [105 208 37]/255    % green
+        [17 170 187]/255  % light-blue
+        [51 17 187]/255     % blue
+        [68 34 153]/255     % purple
+        [220 59 251]/255    % magenta
         };
 end
-condNum=mod(condNum,length(condColors));
-if condNum==0 condNum = length(condColors); end
 
-c = condColors{condNum};
+c = [];
+for n = 1:length(condNum)
+    m=mod(condNum(n),length(condColors));
+    if m==0 m = length(condColors); end
+    
+    c = [c; condColors{m}];
+end
+
 end

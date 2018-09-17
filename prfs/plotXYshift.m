@@ -10,7 +10,7 @@ if ~exist('plotOff','var');
     
     %concentric circles at each dva
     for n = floor([0:1:(res/ppd)/2])
-        a = plotCircle(res/2,-res/2,n*ppd,[0 0 0],.75,'edge'); % center
+        a = plotCircle(res/2,res/2,n*ppd,[0 0 0],.75,'edge'); % center
         set(a,'Linewidth',1); hold on;
     end
 end

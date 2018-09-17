@@ -27,7 +27,8 @@ for r = numRuns
         if trial(t).cond==0 fprintf(fid, '%s \t', 'baseline');
             fprintf(fid, '%i %i %i \n', condColors{1});
         else fprintf(fid, '%s \t', condition(trial(t).cond).name);
-            fprintf(fid, '%i %i %i \n', condColors{condition(trial(t).cond).num+1}); end
+            fprintf(fid, '%i %i %i \n', condColors{condition(trial(t).cond).stim+1});  
+            end
     end
     fclose(fid);
 end

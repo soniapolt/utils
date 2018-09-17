@@ -10,6 +10,8 @@ end
 % nims folder is in the structure:
 % nims/kalanit/project/files/sessionName/indivFolders
 
+cd(topFolder);
+
 % get to the session level of this file structure
 cd nims
 for x = 1:3
