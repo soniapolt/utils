@@ -2,32 +2,33 @@
 clear all; close all;
 
 % RUNS FROM UTILS DIR
+proj = 'sonia';
 
 if containsTxt(pwd,'Volumes')
-exptDir = '/Volumes/projects/invPRF';
+exptDir = ['/Volumes/projects/' proj];
 addpath(genpath('/Volumes/projects/sonia/utils'));
 else
-exptDir = '/sni-storage/kalanit/biac2/kgs/projects/invPRF';
-addpath(genpath('/sni-storage/kalanit/biac2/kgs/projects/sonia/utils'));
+exptDir = ['/share/kalanit/biac2/kgs/projects/' proj];
+addpath(genpath('/share/kalanit/biac2/kgs/projects/sonia/utils'));
 end
 
-exptVersion = 'fixPRF';
+exptVersion = 'localizers/fLoc';
 exptDir = [exptDir '/' exptVersion '/'];
-session = 'EM180809';
-numRuns = 10;
+session = 'MN181023';
+numRuns = 7;
 
 if exist([exptDir session '/Stimuli'])==0
 setupFolders(session,exptDir); % do this here if you haven't yet
 end
 
 % which parts of set-up do we want to run?
-rename = 1;
-pars =1;
-filtIms =0;
+rename = 0;
+pars =0;
+filtIms = 0;
 unpack = 0;
-renameNifti = 0;
-transformNifti = 0;
-makeAnatLink = 0;
+renameNifti = 1;
+transformNifti = 1;
+makeAnatLink = 1;
 
 % first, run setupFolders(session), and transfer the matlab output files
 % from the scan computer to Stimuli/output directory
@@ -35,7 +36,8 @@ makeAnatLink = 0;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% rename output files
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+% rename those files to the standardized runOutput_x
+if rename == 1
 cd([exptDir session '/Stimuli/output']);
 fileNames = dir('*.mat');
 fileNames = {fileNames.name};
@@ -45,8 +47,7 @@ fileNames = {fileNames{~strncmp(fileNames, '._',2)}};
 fileNames = natsort(fileNames);
 
 
-% rename those files to the standardized runOutput_x
-if rename == 1
+
     for k = 1:length(fileNames)
         thisFile= fileNames{k};
         
@@ -60,6 +61,7 @@ if rename == 1
         fprintf('Renamed %s to %s...\n',thisFile,outputFile);
     end
 end
+%WaitSecs(5);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% make parfiles
@@ -95,8 +97,10 @@ cd(exptDir);
 % directory already
 
 if unpack == 1
-   unpackNims([exptDir session]);
-    fprintf('Unpacked Nims folders!\n');
+   % unpackNims([exptDir session]);
+   % fprintf('Unpacked Nims folders!\n');
+   unpackFlyw([exptDir session]);
+   fprintf('Unpacked Flywheel folders!\n');
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -104,7 +108,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 if renameNifti == 1
     cd([exptDir '/' session]);
-    renameNiftis('prf');
+    renameNiftis('run');
     fprintf('Renamed your niftis!\n');
 end
 
@@ -127,10 +131,10 @@ if makeAnatLink == 1
        warning('Add this subject to anatName.m, please!');
        name = input('Anatomy Folder Name? ','s'); 
    end
-    anat = fullfile(dirOf(exptDir,3),'anatomy','vistaVol',name);
-    lnDir = fullfile(exptDir,session,'3DAnatomy');
+    anat = fullfile('/share','kalanit','biac2','kgs','anatomy','vistaVol',name);
+    lnDir = fullfile('/share','kalanit','biac2','kgs','projects',proj,exptVersion,session,'3DAnatomy');
     fprintf('Making 3DAnatomy of %s in %s...\n',anat,lnDir);
     system(['ln -s ' anat ' ' lnDir]);
 end
 
-cd([dirOf(exptDir,2) 'sonia/utils/fmriPipeline']);
+cd([dirOf(exptDir,3) 'sonia/utils/fmriPipeline']);

@@ -24,8 +24,8 @@
 % Adapted by SP 8/2018 to do preprocessing, without loc-specific further
 % analysis
 clear all;
-expt = 'invPRF/fixPRF'; session = 'SP180814'; clip = 5; stcFlag = 1; canonXFlag = 0;
-runBase  = 'prf'; % or 'run';
+expt = 'invPRF/compPRF'; session = 'SP181018'; clip = 5; stcFlag = 0; canonXFlag = 0;
+runBase  = 'run'; % or 'run';
 
 
 % Check and validate inputs and path to vistasoft
@@ -75,8 +75,8 @@ niiFiles = cellfun(@(X) fullfile(sessionDir, X), niiFiles, 'uni', false);
 
 pars = dir(fullfile(sessionDir,'Stimuli','parfiles','*.par')); pars = natsort({pars.name});
 if length(pars) < runCount
-        fprintf(lid, 'Error -- Missing some stimulus parameter (.par) files \nContinued analysis.', session, rr);
-        fprintf('Error -- Missing some stimulus parameter (.par) files \nContinued analysis.', session, rr);
+        fprintf(lid, 'Error -- Missing some stimulus parameter (.par) files \nContinued analysis.', session);
+        fprintf('Error -- Missing some stimulus parameter (.par) files \nContinued analysis.', session);
 end
 
 pars= cellfun(@(X) fullfile(sessionDir,'Stimuli','parfiles', X), pars, 'uni', false);
@@ -89,7 +89,8 @@ elseif length(clip) ~= length(session)
     fclose(lid); return;
 end
 keepFrames = [clip(:) repmat(-1, length(clip), 1)];
-
+% to fix TH's session
+% keepFrames(1,2) = 120; keepFrames(2,2) = 120;
 
 % Initialize session and preprocess fMRI data
 
@@ -198,7 +199,7 @@ er_params.detrend = -1;      % linear detrending
 er_params.glmHRF = 3;        % difference-of-gammas HRF
 er_params.lowPassFilter = 0; % do not low-pass filter by default
 er_params.eventsPerBlock = 2; % specific for facePRF experiment! 
-er_params.framePeriod = tr/1000; %TR
+er_params.framePeriod = tr; %TR
 
 % group scans of preprocessed data and set event-related parameters
 hi = initHiddenInplane('MotionComp_RefScan1', params.scanGroups{1}(1));

@@ -27,7 +27,7 @@ if length(s)>0
     delete(s.name);
 end
 
-s = dir(['*BOLD_EPI*.nii.gz']);
+s = dir(['*BOLD*.nii.gz']);
 epis = natsort({s.name}); % sorts according to number prefix
 
 for n = 1:length(epis)
