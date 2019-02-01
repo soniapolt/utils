@@ -24,12 +24,13 @@
 % Adapted by SP 8/2018 to do preprocessing, without loc-specific further
 % analysis
 clear all;
-expt = 'invPRF/compPRF'; session = 'SP181018'; clip = 5; stcFlag = 0; canonXFlag = 0;
+expt = 'invPRF/fixPRF'; session = 'SP181219'; clip = 5; stcFlag = 1; canonXFlag = 0;
 runBase  = 'run'; % or 'run';
 
 
 % Check and validate inputs and path to vistasoft
-baseDir = fullfile('/sni-storage','kalanit','biac2','kgs','projects');
+baseDir = fullfile('/share','kalanit','biac2','kgs','projects');
+%baseDir = fullfile('/Volumes','projects');
 
 if isempty(which('mrVista'))
     vista_path = 'https://github.com/vistalab/vistasoft';

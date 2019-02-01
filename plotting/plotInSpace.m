@@ -11,7 +11,12 @@ imAlpha(isnan(data))=0;
 
 im = imagesc(data,clim); set(im,'AlphaData',imAlpha); 
 
-pbaspect([numPlots 1 1]); colormap(mrvColorMaps('coolhot'));%set(gca,'visible','off');
+pbaspect([numPlots 1 1]); 
+
+colormap(mrvColorMaps('coolhot'));
+caxis([-max(clim) max(clim)])
+
+%set(gca,'visible','off');
 set(gca,'XTick',[],'YTick',[]);
 
 if exist('addText','var') && addText==1

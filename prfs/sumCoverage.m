@@ -1,10 +1,10 @@
 
-function coverage = sumCoverage(vox,ppd,res,setScale,plotCenters)
+function [coverage, areaDeg] = sumCoverage(vox,ppd,res,setScale,plotCenters)
 % vox is a structure of v voxels with  a params field
 
-% load('/Volumes/invPRF/cssFit/fits/SP180625/photo/SP180625_f_rh_IOG_faces_cssShift.mat')
+% load('/Volumes/projects/invPRF/cssFit/fits_orig/fixPRF/SP180814/photo/SP180814_f_lh_hV4_cssShift.mat')
 % vox = fits(1).vox; ppd = fits(1).ppd; res= fits(1).res;
-% vox = readPRFs(vox,ppd,res);
+% vox = readPRFs(vox,ppd,res); setScale = [];
 % plotCenters = 1;
 
 [X,Y]=meshgrid(-res/2:res/2,-res/2:res/2);
@@ -40,6 +40,7 @@ if exist('plotCenters','var')
 end
 
 threshIm = im2bw(covIm,max(covIm(:))/2); % half-max of pRF coverage
+areaDeg = sum(threshIm(:))/(ppd*ppd);
 b = bwboundaries(threshIm,4,'noholes');
 for k=1:length(b)
     boundary = b{k}; hold on;

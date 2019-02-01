@@ -6,8 +6,8 @@ s = scatter(x,y,30,color); hold on;
 
 % centroid & std
 
-hold on; errorbar2(nanmean(x),nanmean(y),nanstd(x)/sqrt(length(x)),'x','m.-');%,'LineWidth',6,'MarkerSize',30);
-hold on; errorbar2(nanmean(x),nanmean(y),nanstd(y)/sqrt(length(y)),'y','m.-');%,'LineWidth',6,'MarkerSize',30);
+hold on; errorbar2(nanmedian(x),nanmedian(y),nanstd(x)/sqrt(length(x)),'x','m.-');%,'LineWidth',6,'MarkerSize',30);
+hold on; errorbar2(nanmedian(x),nanmedian(y),nanstd(y)/sqrt(length(y)),'y','m.-');%,'LineWidth',6,'MarkerSize',30);
 %
 
 xlabel(xlab,'FontSize',fontSize);

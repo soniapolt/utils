@@ -2,7 +2,7 @@
 clear all; close all;
 
 % RUNS FROM UTILS DIR
-proj = 'sonia';
+proj = 'invPRF';
 
 if containsTxt(pwd,'Volumes')
 exptDir = ['/Volumes/projects/' proj];
@@ -12,10 +12,10 @@ exptDir = ['/share/kalanit/biac2/kgs/projects/' proj];
 addpath(genpath('/share/kalanit/biac2/kgs/projects/sonia/utils'));
 end
 
-exptVersion = 'localizers/fLoc';
+exptVersion = 'fixPRF';
 exptDir = [exptDir '/' exptVersion '/'];
-session = 'MN181023';
-numRuns = 7;
+session = 'SP181219';
+numRuns = 10;
 
 if exist([exptDir session '/Stimuli'])==0
 setupFolders(session,exptDir); % do this here if you haven't yet
@@ -24,11 +24,12 @@ end
 % which parts of set-up do we want to run?
 rename = 0;
 pars =0;
-filtIms = 0;
+filtIms =1;
+makeAnatLn = 0;
 unpack = 0;
-renameNifti = 1;
-transformNifti = 1;
-makeAnatLink = 1;
+renameNifti = 0;
+transformNifti = 0;
+
 
 % first, run setupFolders(session), and transfer the matlab output files
 % from the scan computer to Stimuli/output directory
@@ -77,12 +78,14 @@ end
 % 1 = binary, 2 = photo, 3 = edge
 
 if filtIms == 1
-    for ii = 1:2 % default = just binary & photo
+    for ii = [2 5] %1:2 % default = just binary & photo
         switch exptVersion
             case 'invPRF3'
         invPRF3_writeFiltIms(ii,session,exptDir,exptVersion,[1:numRuns])
             case 'fixPRF'
                 fixPRF_writeFiltIms(ii,session,dirOf(exptDir,1),[1:numRuns])
+            case 'compPRF'
+                compPRF_writeFiltIms(ii,session,dirOf(exptDir,1),[1:numRuns])
         end
     end
     fprintf('Wrote mean images from the scanner stimuli!!\n');
@@ -125,16 +128,9 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% makeAnatomyLink
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-if makeAnatLink == 1
-   try name = anatName(session(1:2));
-   catch 
-       warning('Add this subject to anatName.m, please!');
-       name = input('Anatomy Folder Name? ','s'); 
-   end
-    anat = fullfile('/share','kalanit','biac2','kgs','anatomy','vistaVol',name);
-    lnDir = fullfile('/share','kalanit','biac2','kgs','projects',proj,exptVersion,session,'3DAnatomy');
-    fprintf('Making 3DAnatomy of %s in %s...\n',anat,lnDir);
-    system(['ln -s ' anat ' ' lnDir]);
+if makeAnatLn == 1
+   cd([exptDir session]);
+   makeAnatLink(session(1:2));
 end
 
-cd([dirOf(exptDir,3) 'sonia/utils/fmriPipeline']);
+cd([dirOf(exptDir,2) 'sonia/utils/fmriPipeline']);

@@ -16,7 +16,7 @@ function compPRF_writeFiltIms(which,session,exptDir,runs)
 % 4 = energy per mrVista (jw 2008 authorship?), which ends up being
 % near-identicl to #2 (just normalizes differently at the end
 im.which = which; %
-im.name = {'binary' 'photo'}; % just do binary and photo for now
+im.name = {'binary' 'photo' 'edge' 'otherEdge' 'internal'}; % edge isn't set up yet...
 
 im.subj = session;
 im.expt = 'compPRF';
@@ -53,6 +53,7 @@ condIms{length(condition)} = [];
 for r = im.runs
     %numConds =  length(condition)/length(unique([condition.pos]))
     load([dataDir '/' im.expt '_' num2str(r) '.mat']);
+    if containsTxt(im.name{im.which},'internal') load('noHair.mat'); end % this should live in our utils directory
     for n = 1:length(face)
         face{n} = imresize(face{n},condSizes{1});
         bigFace{n} = imresize(face{n},condSizes{2});
@@ -105,7 +106,7 @@ for r = im.runs
             if condition(TR(n).cond).numFaces == 2
             thisIm(rect2(1):rect2(3),rect2(2):rect2(4)) = c(:,:,1);
             end
-        elseif im.which == 2 % photo
+        elseif im.which == 2 || im.which == 5% photo
             % subtract background, take absolute value, divide by max
             faceM = abs(faceM-params.backgroundColor);
             thisIm(rect(1):rect(3),rect(2):rect(4)) = faceM;

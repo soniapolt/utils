@@ -14,7 +14,7 @@ function fixPRF_writeFiltIms(which,session,exptDir,runs)
 % 4 = energy per mrVista (jw 2008 authorship?), which ends up being
 % near-identicl to #2 (just normalizes differently at the end
 im.which = which; %
-im.name = {'binary' 'photo' 'edge'};
+im.name = {'binary' 'photo' 'edge' 'other edge' 'internal'};
 
 im.subj = session;
 im.expt = 'fixPRF';
@@ -51,6 +51,7 @@ condIms{length(condition)} = [];
 for r = im.runs
     %numConds =  length(condition)/length(unique([condition.pos]))
     load([dataDir '/' im.expt '_' num2str(r) '.mat']);
+    if containsTxt(im.name{im.which},'internal') load('noHair.mat'); end % this should live in our utils directory
     for n = 1:length(face)
         face{n} = imresize(face{n},condSizes{1});
     end
@@ -84,7 +85,7 @@ for r = im.runs
                 % insert disk at face location
                 c=insertShape(zeros(im.diam,im.diam),'FilledCircle',[im.diam/2 im.diam/2 im.diam/2],'Color','White','Opacity',1);
                 thisIm(rect(1):rect(3),rect(2):rect(4)) = c(:,:,1);
-            elseif im.which == 2 % photo
+            elseif im.which == 2 || im.which == 5% photo
                 % subtract background, take absolute value, divide by max
                 faceM = abs(faceM-params.backgroundColor);
                 thisIm(rect(1):rect(3),rect(2):rect(4)) = faceM;

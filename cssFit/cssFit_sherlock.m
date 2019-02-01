@@ -2,7 +2,6 @@ function timeFit = cssFit_sherlock(whichCSS,expt,session, stimName, ROI, hem)
 % general function, which allows us to fit multiple versions of the cssFit
 % model
 
-
 tic
 % load data & stim
 whichStim = ['stims/' session '_condAvg_' stimName '.mat'];
@@ -19,7 +18,7 @@ switch expt
     case 'compPRF'
         fits = struct('session',session,'cond',{'Small' 'Big' 'Two'},'condNums', {[1:25],[26:50],[51:75]},'res',im.size,...
             'stim',whichStim,'fitTime',date,'ppd',im.ppd,'whichModel',[],'rectBetas',rectNegBetas);
-    case 'invPRF'
+    case 'fixPRF'
         fits = struct('session',session,'cond',{'Inverted' 'Upright'},'condNums', {[1:25],[26:50]},'res',im.size,...
             'stim',whichStim,'fitTime',date,'ppd',im.ppd,'whichModel',[],'rectBetas',rectNegBetas);
 end

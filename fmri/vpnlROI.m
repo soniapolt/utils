@@ -1,10 +1,10 @@
 function thisROI = vpnlROI(thisROI,subj,expt)
 
 % commonly used subjects and ROI specifications
-if ~exist('expt','var') % defaults
-initials = {'JG'            'SP'                'EM'            'AS'        'TH'            'AR'            'MN'};
-ret = {     'wfCSS_f_'      'toonRet_f_'        'toonRet_f_'    'wfCSS_f_'  'toonRet_f_'    'toonRet_f_'    'toonRet_f_'};
-face = {    'f_'            'latprf_f_'         'latprf_f_'     'f_'        'fLoc_f_'       'fLoc_f_'       'fLoc_f_'};
+if ~exist('expt','var') || ~strcmp(expt,'invPRF3') % defaults
+initials = {'JG'            'SP'                'EM'            'AS'        'TH'            'AR'            'MN'            'DF'            'MG'};
+ret = {     'toonRet_f_'    'toonRet_f_'        'toonRet_f_'    'wfCSS_f_'  'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'};
+face = {    'latprf_f_'     'latprf_f_'         'latprf_f_'     'f_'        'fLoc_f_'       'fLoc_f_'       'fLoc_f_'       'latprf_f_'     'latprf_f_'};
 
 else
     switch expt

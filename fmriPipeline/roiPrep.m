@@ -14,16 +14,16 @@
 % fill in this info:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-expt = 'lateralPRFs/data/toonRet/';
+expt = 'lateralPRFs/data/toonRet';%/invPRF/compPRF';%
 exptDir = fullfile('/share/kalanit/biac2/kgs/projects/',expt);
 
-session = 'sp092418_ret';
+session = 'mg090618_ret';
 local = 1;              % remember, we start with local (/Gray/ROIs) labels!
 
 %%%% which ROIs
 hems = {'rh' 'lh'};
-ROIs = {'V1' 'V2v' 'V2d' 'V3v' 'V3d' 'hV4' 'VO1'};          % important - these should be in 'cleaning' order (e.g. voxels will be deleted in ROI #2 if the overlap with ROI #1, etc
-colors = {'k' 'b' 'b' 'g' 'g' 'y' 'm'};
+ROIs = {'V1' 'V2v' 'V2d' 'V3v' 'V3d' 'hV4' 'VO1'}; %{'V1' 'V2' 'V3' 'hV4' }; %         % important - these should be in 'cleaning' order (e.g. voxels will be deleted in ROI #2 if the overlap with ROI #1, etc
+colors = {'k' 'b' 'b' 'g' 'g' 'y' 'm'};%{'k' 'b' 'g' 'y' 'm'}; %
 
 % ROIs = {'mFus_faces' 'pFus_faces' 'IOG_faces' 'STS_faces'}; % important - these should be in 'cleaning' order (e.g. voxels will be deleted in ROI #2 if the overlap with ROI #1, etc
 % colors = {'r' 'm' 'y' 'w'};
@@ -36,8 +36,8 @@ newPre = 'toonRet_f_';     % preFix to add to the ROI name - usualling expt_f/a_
 combo = 1;              % toggle on/off - combining dorsal/ventral ROIs in retinotopy. will skip if irrelevant.
 
 %%%%% comment field information - session & anat will be auto-filled
-comment.name = 'Sonia Poltoratski & Jesse Gomez'; 
-comment.expt = 'toonotopy pRF mapping';
+comment.name = 'Sonia Poltoratski'; 
+comment.expt = 'toonRet pRF mapping';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % start processing ROIs
