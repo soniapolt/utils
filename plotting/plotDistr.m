@@ -12,7 +12,7 @@ function plotDistr(condData,whichPlot,condNames,nBins,whichM,doKS)
 % end
 
 if ~exist('nBins','var') nBins = 100; end
-if ~exist('whichM','var') whichM = 1; end
+if ~exist('whichM','var') whichM = 3; end
 
 edges = linspace(min([condData{:}]),max([condData{:}]),nBins);
 
