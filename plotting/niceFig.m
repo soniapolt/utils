@@ -1,6 +1,12 @@
-function f = niceFig(figSize,fontSize)
+function f = niceFig(figSize,fontSize,painters)
 % initialized figure with some nicer params
 f= figure;set(gcf,'color',[1 1 1],'Units', 'Normalized', 'OuterPosition', figSize,'DefaultTextFontSize',fontSize);
-set(gcf,'renderer','Painters');
+
+if exist('painters','var')
+    set(gcf,'renderer','Painters');
+else
+    set(gcf,'renderer','OpenGL');
+end
+
 end
 

@@ -1,4 +1,4 @@
-function niceSave(figDir,fName,ROIs,subjs,formats)
+function niceSave(figDir,fName,ROIs,subjs,formats,painters)
 % saves a few versions of the current figure
 % default is png
 if ~exist('formats','var')
@@ -25,17 +25,25 @@ if exist('subjs','var') && ~isempty(subjs)
     else
         addText = [addText '_groupN' num2str(length(subjs))]; end
 end
-    
-    % don't do any weird rescaling
-    set(gcf, 'PaperPositionMode', 'auto');
+
+% don't do any weird rescaling
+set(gcf, 'PaperPositionMode', 'auto');
+
+% openGL preserves transparency, but doesn't allow great image
+% manipulation in illustrator
+if exist('painters','var')
     set(gcf,'renderer','Painters');
+else
+    set(gcf,'renderer','OpenGL');
+end
+
+
+% save all our formats
+for n = 1:length(formats)
     
-    % save all our formats
-    for n = 1:length(formats)
-        
-        fprintf(['Saving to: ' [figDir fName addText '.' formats{n}] '...\n']);
-        saveas(gcf,[figDir fName addText '.' formats{n}],formats{n});
-        % and say so
-        
-    end
+    fprintf(['Saving to: ' [figDir fName addText '.' formats{n}] '...\n']);
+    saveas(gcf,[figDir fName addText '.' formats{n}],formats{n});
+    % and say so
     
+end
+
