@@ -13,8 +13,11 @@ function fixPRF_writeFiltIms(which,session,exptDir,runs)
 % 3 = energy per edge 2017 paper (remove low frequency, rectify)
 % 4 = energy per mrVista (jw 2008 authorship?), which ends up being
 % near-identicl to #2 (just normalizes differently at the end
+% 5 = use the noHair.mat images + photo
+% 6 = simple average, no scaling & photo transform
+
 im.which = which; %
-im.name = {'binary' 'photo' 'edge' 'other edge' 'internal'};
+im.name = {'binary' 'photo' 'edge' 'other edge' 'internal' 'average'};
 
 im.subj = session;
 im.expt = 'fixPRF';
@@ -69,7 +72,10 @@ for r = im.runs
     end
     
     for n = 1:length(TR)
-        thisIm = zeros(im.size,im.size);
+        if im.which == 6;
+            thisIm = ones(im.size,im.size).*params.backgroundColor;
+        else
+        thisIm = zeros(im.size,im.size);end
         if TR(n).cond>0
             faces = [];
             for m = find(TR(n).IDs) %ignore blanks within trialset
@@ -109,7 +115,9 @@ for r = im.runs
                 % divide by max (in a slightly different way that others - done
                 % after all ims are aggregated
                 thisIm(rect(1):rect(3),rect(2):rect(4)) = sqrt((faceM-params.backgroundColor).^2);
-            end
+            elseif im.which == 6
+                % no transform
+                thisIm(rect(1):rect(3),rect(2):rect(4)) = faceM;end
             if isempty(condIms{TR(n).cond})
                 condIms{TR(n).cond} = thisIm;
             else condIms{TR(n).cond} = cat(3,condIms{TR(n).cond},thisIm);
