@@ -11,3 +11,10 @@ Server connection failure on 29-Apr-2019 16:17:29, reported by SP
 
 Note: 4th disconnection since 1:30pm 
 
+
+****
+Oak tests, 29-Apr-2019 16:32:18. Connected via network, run by SP 
+
+Opening .mat file: 0.01135s. 
+Opening nifti: 1.06322s. 
+Softlink working? Yes. 

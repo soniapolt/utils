@@ -1,4 +1,4 @@
-function checkOak(user,noNote,newLog)
+%function checkOak(user,noNote,newLog)
 % performs and times some operations on the server, outputs a log file
 % also allows you to optionally add a note via input prompt
 %default is oakLog.txt in sonia/utils/checkServer
@@ -26,7 +26,7 @@ if ~exist('user','var')
 user = input('Your Initials? ','s');
 end
 
-logDir = [projectsDir 'sonia/utils/checkServer/'];
+logDir = [projectsDir 'sonia/utils/oak/'];
 
 % if you pass variable newLog, the existing log file will be overwritten
 % with the name that you specify
