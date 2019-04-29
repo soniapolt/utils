@@ -1,8 +1,0 @@
-
-****
-Oak tests, 29-Apr-2019 15:17:06. Connected via mount, run by SP 
-
-Opening .mat file: 0.04403s. 
-Opening nifti: 4.52460s. 
-Softlink working? No. 
-Note: Hello, world! 
