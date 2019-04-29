@@ -2,4 +2,5 @@
 *DS_Store*
 *._*
 *.smbdelete*
-*checkServer/*.txt
+checkServer/*.txt
+checkServer/*.mat
