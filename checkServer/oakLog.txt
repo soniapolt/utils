@@ -1,8 +1,13 @@
 
 ****
-Oak tests, 29-Apr-2019 15:17:06. Connected via mount, run by SP 
+Oak tests, 29-Apr-2019 16:09:00. Connected via mount, run by SP 
 
-Opening .mat file: 0.04403s. 
-Opening nifti: 4.52460s. 
+Opening .mat file: 0.10894s. 
+Opening nifti: 4.02278s. 
 Softlink working? No. 
-Note: Hello, world! 
+
+****
+Server connection failure on 29-Apr-2019 16:17:29, reported by SP 
+
+Note: 4th disconnection since 1:30pm 
+
