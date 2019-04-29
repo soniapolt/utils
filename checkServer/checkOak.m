@@ -1,9 +1,18 @@
 function checkOak(user,noNote,newLog)
 % performs and times some operations on the server, outputs a log file
-% optionally add a note = a string that can be added to the server check
+% also allows you to optionally add a note via input prompt
+%default is oakLog.txt in sonia/utils/checkServer
+% 
+% all inputs are optional
 %
-% newLog = would you like to initialize a new log? enter its name here.
-% otherwise, default is oakLog.txt in sonia/utils/checkServer
+% user = string of user initials (e.g. 'SP'). if empty, function will
+% prompt you
+% 
+% noNote = flag to skip the 'add note' prompt - useful if we're automating
+% the check
+% 
+% newLog = would you like to initialize a new log? enter its name here,
+% e.g. 'newLog1.txt'
 
 % are you running via mounting, or in lab?
 if isdir('/Volumes/projects')
