@@ -1,0 +1,34 @@
+Testing Oak:  29-Apr-2019 13:53:22. 
+
+****
+Oak Tests, 29-Apr-2019 13:55:46. 
+
+****
+Oak Tests, 29-Apr-2019 14:09:44. 
+
+Opening nifti: 3.026619e+00sec. 
+Opening nifti: Opening nifti: Opening .mat file: 0.01294s. 
+****
+Oak tests, 29-Apr-2019 14:29:25. Connected via mount. 
+
+Opening .mat file: 0.01354s. 
+Opening nifti: 2.93654s. 
+Softlink working? No. 
+****
+Oak tests, 29-Apr-2019 14:37:14. Connected via mount, run by SP 
+
+Opening .mat file: 0.07741s. 
+Opening nifti: 3.53542s. 
+Softlink working? No. 
+****
+Oak tests, 29-Apr-2019 14:38:03. Connected via mount, run by SP 
+
+Opening .mat file: 0.01480s. 
+Opening nifti: 3.56134s. 
+Softlink working? No. 
+****
+Oak tests, 29-Apr-2019 14:38:46. Connected via mount, run by SP 
+
+Opening .mat file: 0.02522s. 
+Opening nifti: 2.94841s. 
+Softlink working? No. 

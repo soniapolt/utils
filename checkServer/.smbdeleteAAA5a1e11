@@ -1,0 +1,56 @@
+****
+Oak tests, 29-Apr-2019 14:40:44. Connected via mount, run by SP 
+
+Opening .mat file: 0.03802s. 
+Opening nifti: 3.53648s. 
+Softlink working? No. 
+****
+Oak tests, 29-Apr-2019 14:41:34. Connected via mount, run by SP 
+
+Opening .mat file: 0.01460s. 
+Opening nifti: 3.46078s. 
+Softlink working? No. 
+Note: Hello, world!. 
+****
+Oak tests, 29-Apr-2019 14:42:55. Connected via mount, run by Sonia 
+
+Opening .mat file: 0.01792s. 
+Opening nifti: 2.80023s. 
+Softlink working? No. 
+Note: Woo! 
+
+
+****
+Server connection failure on 29-Apr-2019 14:48:25, reported by SP 
+
+Note: Intermittently kicking me off 
+
+
+****
+Oak tests, 29-Apr-2019 14:51:26. Connected via mount, run by SP 
+
+Opening .mat file: 0.01553s. 
+Opening nifti: 2.84125s. 
+Softlink working? No. 
+
+****
+Server connection failure on 29-Apr-2019 14:51:35, reported by SP 
+
+Note: Intermittently kicking me off 
+
+
+****
+Oak tests, 29-Apr-2019 14:54:48. Connected via mount, run by SP 
+
+Opening .mat file: 0.01657s. 
+Opening nifti: 3.34474s. 
+Softlink working? No. 
+Note: fdsk 
+
+****
+Server connection failure on 29-Apr-2019 14:55:54, reported by me 
+
+
+****
+Server connection failure on 29-Apr-2019 14:56:02, reported by me 
+
