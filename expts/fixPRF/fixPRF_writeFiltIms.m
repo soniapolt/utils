@@ -13,11 +13,11 @@ function fixPRF_writeFiltIms(which,session,exptDir,runs)
 % 3 = energy per edge 2017 paper (remove low frequency, rectify)
 % 4 = energy per mrVista (jw 2008 authorship?), which ends up being
 % near-identicl to #2 (just normalizes differently at the end
-% 5 = use the noHair.mat images + photo
-% 6 = simple average, no scaling & photo transform
 
-im.which = which; %
-im.name = {'binary' 'photo' 'edge' 'other edge' 'internal' 'average'};
+%which = 'external'; session = 'SP181219'; exptDir = '/share/kalanit/biac2/kgs/projects/invPRF'; runs = 8;
+
+im.name = {'binary' 'photo' 'edge' 'edge2' 'internal' 'external','eyes'};
+im.which = cellNum(which,im.name);
 
 im.subj = session;
 im.expt = 'fixPRF';
@@ -54,9 +54,9 @@ condIms{length(condition)} = [];
 for r = im.runs
     %numConds =  length(condition)/length(unique([condition.pos]))
     load([dataDir '/' im.expt '_' num2str(r) '.mat']);
-    if containsTxt(im.name{im.which},'internal') load('noHair.mat'); end % this should live in our utils directory
+    if im.which>4 load([im.name{im.which} '.mat']); end % this should live in our utils directory
     for n = 1:length(face)
-        face{n} = imresize(face{n},condSizes{1});
+        face{n} = (imresize(face{n},condSizes{1}));
     end
     %%% since trials are actually 2TRs each, we need to split up our struct to
     %%% be in TR units
@@ -72,10 +72,7 @@ for r = im.runs
     end
     
     for n = 1:length(TR)
-        if im.which == 6;
-            thisIm = ones(im.size,im.size).*params.backgroundColor;
-        else
-        thisIm = zeros(im.size,im.size);end
+        thisIm = zeros(im.size,im.size);
         if TR(n).cond>0
             faces = [];
             for m = find(TR(n).IDs) %ignore blanks within trialset
@@ -91,7 +88,7 @@ for r = im.runs
                 % insert disk at face location
                 c=insertShape(zeros(im.diam,im.diam),'FilledCircle',[im.diam/2 im.diam/2 im.diam/2],'Color','White','Opacity',1);
                 thisIm(rect(1):rect(3),rect(2):rect(4)) = c(:,:,1);
-            elseif im.which == 2 || im.which == 5% photo
+            elseif im.which == 2 || im.which > 4 % photo
                 % subtract background, take absolute value, divide by max
                 faceM = abs(faceM-params.backgroundColor);
                 thisIm(rect(1):rect(3),rect(2):rect(4)) = faceM;
@@ -115,9 +112,10 @@ for r = im.runs
                 % divide by max (in a slightly different way that others - done
                 % after all ims are aggregated
                 thisIm(rect(1):rect(3),rect(2):rect(4)) = sqrt((faceM-params.backgroundColor).^2);
-            elseif im.which == 6
-                % no transform
-                thisIm(rect(1):rect(3),rect(2):rect(4)) = faceM;end
+%             elseif im.which == 6
+%                 % no transform
+%                 thisIm(rect(1):rect(3),rect(2):rect(4)) = faceM;end
+            end
             if isempty(condIms{TR(n).cond})
                 condIms{TR(n).cond} = thisIm;
             else condIms{TR(n).cond} = cat(3,condIms{TR(n).cond},thisIm);
@@ -141,4 +139,3 @@ end
 
 save([outputDir im.subj '_condAvg_' im.name{im.which} '.mat'],'condAvg','im');
 %implay(condIms);
-end
