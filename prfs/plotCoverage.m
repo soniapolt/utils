@@ -41,7 +41,7 @@ for n = floor([0:1:(res/ppd)/2])
     set(a,'Linewidth',1); hold on;
 end
 
-set(gca,'visible','off'); hline(res/2,'k--'); vline(res/2,'k--');
+%set(gca,'visible','off'); hline(res/2,'k--'); vline(res/2,'k--');
 axis([.5 res+.5 .5 res+.5]); axis square;
 %set(gca,'YDir','reverse','fontSize',fontSize);
 if ~isempty(leg)
