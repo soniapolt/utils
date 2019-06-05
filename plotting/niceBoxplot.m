@@ -21,12 +21,11 @@ if exist('cutY','var')
 
 
 set(gca,'box','off','color','none');
-
 if exist('plotMed','var')
     for s = 1:length(labels)
-        txt = [labels{s} ' = ' num2str(median(data(:,s)))];
+        txt = [labels{s} ' = ' num2str(nanmedian(data(:,s)))]
         yl = ylim;
-        t = text(s+.1,yl(2)-(yl(2)*.3*s),txt); set(t,'Color','k','FontSize',12);
+        t = text(s+.1,yl(2)-(yl(2)*.05*s),txt); set(t,'Color','k','FontSize',12);
     end
 end
 
