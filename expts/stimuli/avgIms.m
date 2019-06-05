@@ -1,4 +1,4 @@
-function avgIms
+%function avgIms
 % takes transformation of all of the face images, rather than
 % session-specific
 
@@ -11,8 +11,8 @@ function avgIms
 
 im.which = 2; %
 im.name = {'binary' 'photo' 'edge' 'other edge' 'internal'};
-im.stims = 'faceFront.mat';
-im.saveName = 'fullAvg.mat';
+im.stims = 'external.mat';
+im.saveName = 'extAvg.mat';
 
 load(im.stims);
 
@@ -22,7 +22,7 @@ subplot(1,2,1); imagesc(avgFace); title(['Average Face, ' im.saveName]);
 
 im.backgroundColor = avgFace(1,1);
 
-        if im.which == 2 || im.which == 5% photo
+        if im.which == 2 || im.which > 5% photo
                 % subtract background, take absolute value, divide by max
                 avgFace = abs(avgFace-im.backgroundColor);
             elseif im.which == 3 % energy per edge 2017
@@ -54,7 +54,9 @@ else
     avgFace = avgFace/max(avgFace(:));
 end
 
-save(['stimuli/' im.saveName],'avgFace');
+subplot(1,2,2); imagesc(avgFace); title(['Average Face, ' im.saveName]);
+
+%save(['stimuli/' im.saveName],'avgFace');
 %implay(condIms);
 subplot(1,2,2); imshow(avgFace); title(im.name{im.which});
-end
+%end
