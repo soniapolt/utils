@@ -5,6 +5,11 @@ function [session, numRuns] = vpnlSessions(expt,subject,sessNum,task)
 if ~exist('sessNum','var') sessNum = 1; end
 
 switch expt
+    case 'nhp'
+        s = {'george'};
+        subj(1).sess = {'george'};
+        subj(1).runNums = [1];
+        
     case 'fixPRF'
         
         s = {'AS' 'EM' 'JG' 'SP' 'TH' 'AR' 'MN' 'DF' 'MG'};

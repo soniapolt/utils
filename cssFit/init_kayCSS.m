@@ -17,7 +17,7 @@ end
 % than 0.1dva or bigger than stimulus, and gain/expt is positive/reasonable
 
 bounds = [  1           1           ppd/10      0       0;...
-            stimSize-1  stimSize-1  stimSize    100     5];
+            stimSize-1  stimSize-1  stimSize    100     1];
         
 boundsFIX = bounds; boundsFIX(1,5) = NaN; % don't fit expt initially
 

@@ -23,7 +23,7 @@ maxSize = res/ppd-.25;          % in deg
 trimEdge = .25*ppd;             % edge of stimulus, in pix
 trimSD= res-.25*ppd;            % trim whole-field SD estimates (in addition to size)
 maxShift = 5;                   % absolute value of max shift
-maxGain = 95;                   % range was set at 100
+maxGain = 99;                   % range was set at 100
 
 size = (2*fitParams(3)/ppd)/sqrt(fitParams(5)); % in deg
 XYdeg = (fliplr(fitParams(1:2))-res/2)/ppd; % in deg
