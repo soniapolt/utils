@@ -1,4 +1,4 @@
-function s = scatterCent(x,y,color,xlab,ylab,titleTx,fontSize,equalLims,leastLine)
+function s = scatterCent(x,y,color,xlab,ylab,titleTx,fontSize,equalLims,line)
 % scatterplot with centroid & std
 % if whichLine == 1, plot ID line; if whichLine == 2, plot lsqfit line
 
@@ -14,12 +14,14 @@ xlabel(xlab,'FontSize',fontSize);
 y = ylabel(ylab,'FontSize',fontSize,'Interpreter','none');
 title(titleTx,'fontSize',fontSize);
 
-axis square; xx=get(gca,'xlim'); %if ~exist('equilLims','var') || equilLims ylim(xx);end
-hold on; 
-if exist('leastLine','var')
-h = lsline; set(h,'color',color);    
-else 
-plot(xx,xx,'k--'); end
+axis square; xx=get(gca,'xlim'); if exist('equalLims','var') && equalLims ylim(xx);end
+hold on;
 
+if exist('line','var')
+    if line == 2
+        h = lsline; set(h,'color',color);
+    elseif line == 1
+        plot(xx,xx,'k--'); end
+    
 end
 

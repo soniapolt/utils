@@ -35,7 +35,7 @@ hold on; hline(res/2,'k--'); hold on; vline(res/2,'k--');
 %%% plot pRF centers and half-max coverage
 if exist('plotCenters','var')
     for v = 1:length(vox)
-    plot(vox(v).params(2),vox(v).params(1),'w.'); hold on;
+    plot(vox(v).params(2),vox(v).params(1),'k.'); hold on;
     end
 end
 

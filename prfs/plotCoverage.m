@@ -1,4 +1,4 @@
-function h = plotCoverage(vox,color,leg,ppd,res,sampleVox,alphaGain,centerMass,plotCirc)
+function h = plotCoverage(vox,color,leg,ppd,res,alphaGain,sampleVox,centerMass,plotCirc)
 % vox is a structure of v voxels with  a params field
 % plotting only uses kay params, so seeting YDir to reseverse should be
 % sufficient
@@ -41,7 +41,7 @@ for n = floor([0:1:(res/ppd)/2])
     set(a,'Linewidth',1); hold on;
 end
 
-%set(gca,'visible','off'); hline(res/2,'k--'); vline(res/2,'k--');
+set(gca,'visible','off'); hline(res/2,'k--'); vline(res/2,'k--');
 axis([.5 res+.5 .5 res+.5]); axis square;
 %set(gca,'YDir','reverse','fontSize',fontSize);
 if ~isempty(leg)
