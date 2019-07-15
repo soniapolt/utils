@@ -27,8 +27,8 @@ end
 
     if exist('win','var');
         trace = 20; % length of samples that we will use for drawing
-        if length(gazeX) > trace drawX = gazeX(end-trace:end); drawY = gazeX(end-trace:end);
-        Screen('DrawDots',win,[drawX;drawY],2,[200 0 0]); end
+        if length(gazeX) > trace
+        Screen('DrawDots',win,[gazeX(end-trace:end);gazeY(end-trace:end)],2,[200 0 0]); end
         %Screen('Flip',win);
     end
 end
