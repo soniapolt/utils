@@ -10,24 +10,13 @@ function [edfName,el,eyeInit] = initEyelink(edfName)
 % EyelinkDoTrackerSetup(el);
 %
 
-% path for the location of the m-files - this doesn't seem to work if
-% mfiles are not installed locally
-% if isdir('/Users/kalanit')
-%     addpath('/Users/kalanit/Experiments/EyelinkEyetracker/eyeLink_mfiles');
-% % elseif isdir('/Volumes/projects')
-% %     addpath('/Volumes/projects/behavFIE/eyelinkFiles/eyeLink_mfiles');
-% % elseif isdir('/share/kalanit')
-% %     addpath('/share/kgs/biac2/projects/behavFIE/eyelinkFiles/eyeLink_mfiles');
-% else eyeLinkFiles = input('Please provide path to the Eyelink M-Files folder: ');
-%     addpath(eyeLinkFiles); end
-
 eyeInit.screen = Screen('Resolution', max(Screen('Screens'))); 
 eyeInit.backgroundColor = [127 127 127];
 eyeInit.screenDist = 540;       % distance from eye to screen, in mm
 eyeInit.screenCoords = [-202.5 152.5 202.5 -152.5];     % in mm, the size of mitsubishi diamondpro2070sb display
 eyeInit.saccadeSensitivity = 0; % 0 = normal sensitivity, 1 = high sensitivity
-eyeInit.pointCalib = 3;         % n-point calibration (3 or 9)
-eyeInit.autoCalib = 1;          % binary; 1 = enable automatic calibration
+eyeInit.pointCalib = 9;         % n-point calibration (3 or 9)
+eyeInit.autoCalib = 0;          % binary; 1 = enable automatic calibration
 
 % check ability to connect
 try 
@@ -100,7 +89,7 @@ Eyelink('command', 'link_event_filter = LEFT,RIGHT,FIXATION,SACCADE,BLINK,MESSAG
 if Eyelink('IsConnected')~=1
     error('Eyetracker Connection Lost!')
     return;
-end;
+end
 
 % setup the proper calibration foreground and background colors
 el.backgroundcolour = eyeInit.backgroundColor;
