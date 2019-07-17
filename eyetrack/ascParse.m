@@ -1,10 +1,10 @@
-function [trial,info,eyeInit] = ascParse(ascFile,dataFile,saveTo)
+function [trial,info] = ascParse(ascFile,dataFile,saveTo)
 % reads asc full file & sample file and aggregates by trial
 % trial specification (ex. BLOCK %d, TRIAL %d, CONDITION %d) is taken from
 % eyeInit.trialMessage, as are screen properties
 
-%  ascFile = [pwd '/prfRec/ascs/JJ190709.asc']; 
-%  dataFile = [pwd '/prfRec/data/prfRec_JJ_1back.mat']; 
+%ascFile = '/Volumes/projects/behavFIE/prfRec/ascs/JJ190711.asc'; 
+%dataFile = '/Volumes/projects/behavFIE/prfRec/data/prfRec_JJ_1back.mat'
 load(dataFile);
 
 [ascDir,fName,~]=fileparts(ascFile);
@@ -14,7 +14,7 @@ load(dataFile);
 fid = fopen(ascFile); trial = []; info = struct('fixation',[],'blink',[],'saccade',[]);
 n = 1;
     
-thisLine = fgets(fid);   
+thisLine = fgets(fid);
     % initial scan - trial starts and all data
     while ischar(thisLine)
         %%% look for trial message, as specified in eyeInit file

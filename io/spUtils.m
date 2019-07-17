@@ -6,8 +6,8 @@ tryDirs = { '/Volumes/projects/sonia/utils',...
             '/Users/Sonia/matlab/utils'};
         
         found = 0;
-            while ~found
-             for n = 1:length(tryDirs)
+            for n = 1:length(tryDirs)
+                while ~found
                  if isdir(tryDirs{n}) 
                 utilsDir = tryDirs{n}; found = 1; end % try in sequential order but go with first found
             end

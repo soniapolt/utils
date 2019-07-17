@@ -1,10 +1,10 @@
-%function edfRead(fPath,ascDir)
+function edfRead(fPath,ascDir)
 % adapted from AR's eyetrackQA.m - simpler edf reading
 % makes one asc file with all of the data (including events), and one with
 % just samples (for faster handling)
 
 %fPath = '/Users/Sonia/Desktop/invPRFDev/ETanalysisDev/edfs/JJ190709.edf';
-fPath = '/Volumes/projects/behavFIE/pRFrec/edfs/JJ190709.edf';
+%fPath = '/Volumes/projects/behavFIE/pRFrec/edfs/JJ190709.edf';
 
 % parse path to file
 [edfDir,fName,~] = fileparts(fPath);

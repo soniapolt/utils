@@ -53,7 +53,7 @@ end
 % mark blinks and fixations
 for n = 1:size(tr.blinks,1)
     ind = find(nativeTime==tr.blinks(n,1)):find(nativeTime==tr.blinks(n,2));
-    hold on; p{2}=plot(tr.samples(ind,2),tr.samples(ind,3),'o:');
+    hold on; p{2}=plot(tr.samples(ind,2),tr.samples(ind,3),'o','MarkerSize',3,'Color',condColors(5));
 end
 
 % set axes
