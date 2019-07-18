@@ -1,5 +1,5 @@
-function eyelinkEndTrial
-Eyelink('message', 'TRIAL_END');
+function eyelinkEndTrial(message)
+Eyelink('message',message);
 Eyelink('StopRecording');
 end
 

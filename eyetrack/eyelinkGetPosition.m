@@ -1,14 +1,15 @@
-function [gazeX,gazeY] = eyelinkGetPosition(el,gazeX,gazeY,win)
-% 
-% [win,rect]=screenInit; gazeX = []; gazeY = [];
-% %%% move xc and yc off screen center if needed (more relevant for the 7T scanner...)
-% xc = rect(3)/2;
-% yc = rect(4)/2;
+function [gazeX,gazeY] = eyelinkGetPosition(el,gazeX,gazeY,win,corrX,corrY)
+% [gazeX,gazeY] = eyelinkGetPosition(el,gazeX,gazeY,win,plotGaze)
+% gets current gaze position and optionally plots it for the subject
 
 % grab the eye position from the eyetracker in real time
 % if we give it the window, it will also draw a trace
+
+if ~exist('corrX','var') corrX = 0; end
+if ~exist('corrY','var') corrY = 0; end
+%if ~exist('win','var') win = []; end
+
 eyeUsed = Eyelink('EyeAvailable');
-[w, h]=Screen('WindowSize', win);
 
 %while 1
 if Eyelink('NewFloatSampleAvailable') > 0;
@@ -26,9 +27,10 @@ if Eyelink('NewFloatSampleAvailable') > 0;
 end
 
     if exist('win','var');
+        [corrX corrY]
         trace = 20; % length of samples that we will use for drawing
         if length(gazeX) > trace
-        Screen('DrawDots',win,[gazeX(end-trace:end);gazeY(end-trace:end)],2,[200 0 0]); end
+        Screen('DrawDots',win,[gazeX(end-trace:end)+corrX;gazeY(end-trace:end)+corrY],2,[200 0 0]); end
         %Screen('Flip',win);
     end
 end
