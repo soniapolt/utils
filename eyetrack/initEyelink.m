@@ -3,7 +3,11 @@ function [edfName,el,eyeInit] = initEyelink(edfName)
 % SP 2019 version
 % initializes the screen and connects to EyeLink.
 %
-% edf name is optional input for file naming - must be 1-8 chars
+% edf name is optional input for file naming - must be 1-8 chars. for
+% greater flexibility, call in 'tmp' and then rename the file after you've
+% pulled it from the tracker machine
+%
+% now allows a custom calibration routine
 %
 % calls the following PTB functions:
 % el=EyelinkInitDefaults;
@@ -17,6 +21,13 @@ eyeInit.screenCoords = [-202.5 152.5 202.5 -152.5];     % in mm, the size of mit
 eyeInit.saccadeSensitivity = 0; % 0 = normal sensitivity, 1 = high sensitivity
 eyeInit.pointCalib = 9;         % n-point calibration (3 or 9)
 eyeInit.autoCalib = 0;          % binary; 1 = enable automatic calibration
+    
+% new capability - for greater accuracy, we will manually adjust
+% calibration to A) not sample the entire screen, since we are not showing
+% stimuli in all of the corners etc, B) reduce the size of the targets.
+% both of these choices should make calibration more accurate
+eyeInit.customCalib = 1;
+eyeInit.calibProp = .6;         % if eyeInit.customCalib, proportion of the screen that we will sample
 
 % check ability to connect
 try 
@@ -78,6 +89,44 @@ Eyelink('command', 'file_event_filter = LEFT,RIGHT,FIXATION,SACCADE,BLINK,MESSAG
 Eyelink('command', 'file_sample_data  = LEFT,RIGHT,GAZE,DIAMETER');
 % set the info that is available to stimulus computer in real time via ethernet
 Eyelink('command', 'link_event_filter = LEFT,RIGHT,FIXATION,SACCADE,BLINK,MESSAGE,BUTTON');
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% set up custom calibration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+if eyeInit.customCalib
+   el.calibrationtargetsize = 1.2;
+   el.calibrationtargetwidth = .35;
+   EyelinkUpdateDefaults(el); 
+   
+    Eyelink('command', 'generate_default_targets = NO');
+    
+    xOffset = round((eyeInit.screen.width*eyeInit.calibProp)/2); 
+    yOffset = round((eyeInit.screen.height*eyeInit.calibProp)/2);
+    xc = round(eyeInit.screen.width/2); yc=round(eyeInit.screen.height/2);
+    
+    % layout/ordering (should work well with 9- or 5-point calib)
+    %   6   4   7
+    %   2   1   3
+    %   8   5   9
+    
+    eyeInit.calibPoints = [[xc,yc] [xc-xOffset,yc] [xc+xOffset,yc] [xc,yc-yOffset] [xc,yc+yOffset] ...
+                           [xc-xOffset,yc-yOffset] [xc+xOffset,yc-yOffset] ...
+                           [xc-xOffset,yc+yOffset] [xc+xOffset,yc+yOffset]];
+    
+    
+    Eyelink('command',['calibration_samples = ' num2str(eyeInit.pointCalib)]);
+    Eyelink('command',sprintf(['calibration_sequence = ' repmat('%d,',1,eyeInit.pointCalib-1) '%d'],1:eyeInit.pointCalib));
+    Eyelink('command',sprintf(['calibration_targets = ' repmat('%d,%d ',1,eyeInit.pointCalib)],...
+        eyeInit.calibPoints));
+    
+    Eyelink('command',['validation_samples = ' num2str(eyeInit.pointCalib)]);
+    Eyelink('command',sprintf(['validation_sequence = ' repmat('%d,',1,eyeInit.pointCalib-1) '%d'],1:eyeInit.pointCalib));
+    Eyelink('command',sprintf(['validation_targets = ' repmat('%d,%d ',1,eyeInit.pointCalib)],...
+        eyeInit.calibPoints));
+    
+else Eyelink('command', 'generate_default_targets = YES');   
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % if interested in other preferences, to get a list either

@@ -19,6 +19,9 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% convert edf to asc files
 % there is a unix script called edf2asc that will be called - it lives in sputils
+if ~strcmp(spUtils,'/Volumes/projects/sonia/utils')
+    error('This function needs access to the server: /Volumes/projects/sonia/utils');
+end
 unix([spUtils '/eyetrack/edf2asc '  edfDir '/' fName '.edf -p ' ascDir]);
 unix([spUtils '/eyetrack/edf2asc -s -miss NaN ' edfDir '/' fName '.edf -p ' ascDir 'tmp']);
 % rename samples file
