@@ -10,6 +10,8 @@ initials = input('Subject Initials: ','s');
 subjNum = input('Subject Number: ');
 age = input('Subject Age: ');
 gender = input('Subject Gender (M/F/O): ','s');
+handedness = input('Subject Handedness (R/L/A): ','s');
+ethnicity = input('Subject Ethnicity: ','s');
 
 if exist(logName,'file') load(logName);
     ind = length(session)+1;
@@ -17,9 +19,12 @@ if exist(logName,'file') load(logName);
     session(ind).num = subjNum;
     session(ind).age = age;
     session(ind).gender = gender;
+    session(ind).hand = handedness;
+    session(ind).ethn = ethnicity;
     session(ind).date = datestr(now);
 else 
-    session = struct('name',initials,'num',subjNum,'age',age,'gender',gender,'date',datestr(now,0));
+    session = struct('name',initials,'num',subjNum,'age',age,'gender',gender,...
+        'hand',handedness,'ethn',ethnicity,'date',datestr(now,0));
 end
 
 save(logName,'session');
