@@ -8,7 +8,7 @@ function [trial,info] = ascParse(ascFile,dataFile,saveTo)
 load(dataFile);
 
 [ascDir,fName,~]=fileparts(ascFile);
-[samples, startTime] = ascSampleRead([ascDir '/' fName '_samples.asc']); % time, x, y pos in pixels
+[samples] = ascSampleRead([ascDir '/' fName '_samples.asc']); % time, x, y pos in pixels
 
 %%%% parse ASC events file for relevant information
 fid = fopen(ascFile); trial = []; info = struct('fixation',[],'blink',[],'saccade',[]);
@@ -23,6 +23,9 @@ thisLine = fgets(fid);
                 trial(n).start = tmp{1}; 
                 trial(n).text = sprintf(eyeInit.trialMessage,tmp{2:4});
                 trial(n).cond = tmp{4};
+        elseif(strfind(thisLine,'TRIAL_END'))       
+                tmp =textscan(thisLine,['MSG %d TRIAL_END']);
+                trial(n).end = tmp{1};
                 n=n+1;
         %%% look for calibration & validation markers   
         elseif strfind(thisLine,'!CAL CALIBRATION H')
@@ -59,17 +62,13 @@ thisLine = fgets(fid);
     
     % parse samples into trial structure
     for n = 1:length(trial)
-        if n<length(trial)
-        trial(n).samples = samples(findBetween(samples(:,1),trial(n).start,trial(n+1).start),:);
-        else
-        trial(n).samples = samples(find(samples(:,1)>trial(n).start),:);            
-        end
+        trial(n).samples = samples(findBetween(samples(:,1),trial(n).start,trial(n).end),:);
     end
     
 % parse fixations, saccades, and blinks into trial structure
-f = trialFromTime([trial.start],info.fixation(:,1));
-s = trialFromTime([trial.start],info.saccade(:,1));
-b = trialFromTime([trial.start],info.blink(:,1));
+f = trialFromTime([trial.start],[trial.end],info.fixation(:,1));
+s = trialFromTime([trial.start],[trial.end],info.saccade(:,1));
+b = trialFromTime([trial.start],[trial.end],info.blink(:,1));
 
 for n = 1:length(trial)
     trial(n).fixations = double(info.fixation(find(f==n),:));
