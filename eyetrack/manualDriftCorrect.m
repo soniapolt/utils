@@ -30,7 +30,7 @@ if ~exist('duration','var') duration = 2.5; end
     end
     eyelinkEndTrial('DRIFTCORR_END'); 
     corrX = xc-nanmedian(gazeX); corrY = nanmedian(gazeY)-yc;
-    figure; plot(gazeX); hold on; plot(gazeY); legend({['X=' num2str(corrX)] ['Y=' num2str(corrY)]});
-    hline(nanmedian(gazeY),'k:',num2str(nanmedian(gazeY))); hline(nanmedian(gazeX),'k:',num2str(nanmedian(gazeX)));
+%     figure; plot(gazeX); hold on; plot(gazeY); legend({['X=' num2str(corrX)] ['Y=' num2str(corrY)]});
+%     hline(nanmedian(gazeY),'k:',num2str(nanmedian(gazeY))); hline(nanmedian(gazeX),'k:',num2str(nanmedian(gazeX)));
 %end
 
