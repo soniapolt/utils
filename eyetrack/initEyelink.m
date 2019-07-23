@@ -26,8 +26,8 @@ eyeInit.autoCalib = 0;          % binary; 1 = enable automatic calibration
 % calibration to A) not sample the entire screen, since we are not showing
 % stimuli in all of the corners etc, B) reduce the size of the targets.
 % both of these choices should make calibration more accurate
-eyeInit.customCalib = 1;
-eyeInit.calibProp = .6;         % if eyeInit.customCalib, proportion of the screen that we will sample
+eyeInit.customCalib = 0;
+eyeInit.calibProp = .7;         % if eyeInit.customCalib, proportion of the screen that we will sample
 
 % check ability to connect
 try 
@@ -94,11 +94,10 @@ Eyelink('command', 'link_event_filter = LEFT,RIGHT,FIXATION,SACCADE,BLINK,MESSAG
 % set up custom calibration
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+el.calibrationtargetsize = 1.2;
+el.calibrationtargetwidth = .35;
+
 if eyeInit.customCalib
-   el.calibrationtargetsize = 1.2;
-   el.calibrationtargetwidth = .35;
-   EyelinkUpdateDefaults(el); 
-   
     Eyelink('command', 'generate_default_targets = NO');
     
     xOffset = round((eyeInit.screen.width*eyeInit.calibProp)/2); 
@@ -116,12 +115,12 @@ if eyeInit.customCalib
     
     
     Eyelink('command',['calibration_samples = ' num2str(eyeInit.pointCalib)]);
-    Eyelink('command',sprintf(['calibration_sequence = ' repmat('%d,',1,eyeInit.pointCalib-1) '%d'],1:eyeInit.pointCalib));
+    Eyelink('command',sprintf(['calibration_sequence = ' repmat('%d,',1,eyeInit.pointCalib-1) '%d'],0:eyeInit.pointCalib-1));
     Eyelink('command',sprintf(['calibration_targets = ' repmat('%d,%d ',1,eyeInit.pointCalib)],...
         eyeInit.calibPoints));
     
     Eyelink('command',['validation_samples = ' num2str(eyeInit.pointCalib)]);
-    Eyelink('command',sprintf(['validation_sequence = ' repmat('%d,',1,eyeInit.pointCalib-1) '%d'],1:eyeInit.pointCalib));
+    Eyelink('command',sprintf(['validation_sequence = ' repmat('%d,',1,eyeInit.pointCalib-1) '%d'],0:eyeInit.pointCalib-1));
     Eyelink('command',sprintf(['validation_targets = ' repmat('%d,%d ',1,eyeInit.pointCalib)],...
         eyeInit.calibPoints));
     
