@@ -1,4 +1,4 @@
-function [corrX, corrY] = manualDriftCorrect(prompt,el,win,xc,yc,duration)
+function [corrX, corrY, SDs] = manualDriftCorrect(prompt,el,win,xc,yc,duration)
 % since we're not sure that the Eyelink actually implements drift
 % correction, gather fixation position manually, which can then be used to
 % adjust
@@ -30,6 +30,7 @@ if ~exist('duration','var') duration = 2.5; end
     end
     eyelinkEndTrial('DRIFTCORR_END'); 
     corrX = xc-nanmedian(gazeX); corrY = yc- nanmedian(gazeY);
+    SDs = [nanstd(gazeX) nanstd(gazeY)];
 %     figure; plot(gazeX); hold on; plot(gazeY); legend({['X=' num2str(corrX)] ['Y=' num2str(corrY)]});
 %     hline(nanmedian(gazeY),'k:',num2str(nanmedian(gazeY))); hline(nanmedian(gazeX),'k:',num2str(nanmedian(gazeX)));
 %end
