@@ -1,4 +1,5 @@
 function niceSave(figDir,fName,ROIs,subjs,formats,painters)
+% function niceSave(figDir,fName,ROIs,subjs,formats,painters)
 % saves a few versions of the current figure
 % default is png
 if ~exist('formats','var')
