@@ -76,6 +76,21 @@ for n = 1:length(trial)
     trial(n).blinks = double(info.blink(find(b==n),:));
 end
 
+% pull out driftCorr info
+t = 1;
+for n = 1:length(block)
+    for m = 1:length(block(n).trial)
+        trial(t).driftCorr = [block(n).trial(m).corrX block(n).trial(m).corrY];
+        if sum(strcmp(fName(1:2),{'TH','TM','SP','JJ','MN'}))>0 % hack for earliest files, reversing a bug in manualDriftCorr
+            yc = eyeInit.screen.height/2;
+            trial(t).driftCorr(2) = - trial(t).driftCorr(2);
+        end   
+        t = t+1;
+        %%% to add: trial(t).corrSDs = block(n).trial(m).corrSDs;
+    end
+end
+if sum(strcmp(fName(1:2),{'TH','TM','SP','JJ','MN'}))>0 fprintf('Applied DriftCorr Bug Fix...\n'); end
+
 if exist('saveTo','var')
    checkDir(fileparts(saveTo)); % check for existence of directory
    save(saveTo,'trial','info','eyeInit'); 
