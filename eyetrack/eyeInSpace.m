@@ -1,4 +1,4 @@
-function [samples] = eyeInSpace(tr,eyeInit,rate,dva,centerCrop,markPoint,noTime)
+function [samples] = eyeInSpace(tr,eyeInit,rate,dva,driftCorr,centerCrop,markPoint,noTime)
 % input:
 % - tr (trial) variable with fields: start, text, cond, samples, fixations,
 % saccades, and blinks. generated in ascParse.m
@@ -14,6 +14,11 @@ function [samples] = eyeInSpace(tr,eyeInit,rate,dva,centerCrop,markPoint,noTime)
 %centerCrop = 5; tr = trial(1); markPoint = [-1 1]; dva = 1;
 if ~exist('eyeInit.mmScreen','var') eyeInit.mmScreen = [385.28 288.96]; end
 if ~exist('noTime','var') noTime = 0; end
+if ~exist('driftCorr','var') driftCorr = 0; end
+
+if driftCorr % apply drift correction to raw data
+  tr.samples(:,2:3) =tr.samples(:,2:3)+repmat([tr.driftCorr],length(tr.samples),1);
+end
 
 % recenter to zero
 plotLim = [-eyeInit.screen.width/2 eyeInit.screen.width/2; -eyeInit.screen.height/2 eyeInit.screen.height/2]; 
