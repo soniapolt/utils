@@ -26,8 +26,8 @@ eyeInit.autoCalib = 0;          % binary; 1 = enable automatic calibration
 % calibration to A) not sample the entire screen, since we are not showing
 % stimuli in all of the corners etc, B) reduce the size of the targets.
 % both of these choices should make calibration more accurate
-eyeInit.customCalib = 0;
-eyeInit.calibProp = .7;         % if eyeInit.customCalib, proportion of the screen that we will sample
+eyeInit.customCalib = 1;
+eyeInit.calibProp = .5;         % if eyeInit.customCalib, proportion of the screen that we will sample
 
 % check ability to connect
 try 
