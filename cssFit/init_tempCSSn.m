@@ -1,4 +1,4 @@
-function [modelfun, model, metric, resampling] = init_tempCSS(stimSize,hem,ppd)
+function [modelfun, model, metric, resampling] = init_tempCSSn(expN,stimSize,hem,ppd)
 
 % the parameters of the CSS model are [R C S G N] where
 %   R is the row index of the center of the 2D Gaussian
@@ -11,18 +11,18 @@ function [modelfun, model, metric, resampling] = init_tempCSS(stimSize,hem,ppd)
 
 [d,xx,yy] = makegaussian2d(stimSize,2,2,2,2);
 if strcmp(hem,'lh')==1
-    seed = [.5*stimSize .75*stimSize ppd 1 0.2 .5 .5 .5 .5 .5];
-else seed = [.5*stimSize .25*stimSize ppd 1 0.2 .5 .5 .5 .5 .5];
+    seed = [.5*stimSize .75*stimSize ppd 1 .5 .5 .5 .5 .5];
+else seed = [.5*stimSize .25*stimSize ppd 1 .5 .5 .5 .5 .5];
 end
 
 % bounds currently: X/Y can't be outside of stimulus, size can't be less
 % than 0.1dva or bigger than stimulus, and gain/expt is positive/reasonable
 % weights must be between 0 and 1
 
-bounds = [  1           1           ppd/10      0       0   0   0   0   0   0;...
-    stimSize-1  stimSize-1  stimSize    100     1   1   1   1   1   1];
+bounds = [  1           1           ppd/10      0       0   0   0   0   0;...
+            stimSize-1  stimSize-1  stimSize    100     1   1   1   1   1];
 
-boundsFIX = bounds; boundsFIX(:,5:end) = NaN; % don't fit expt or weights initially
+boundsFIX = bounds; boundsFIX(:,5:end) = NaN; % don't fit  weights initially
 
 load('tmpMasks.mat');
 for m = 1:length(masks)
@@ -32,8 +32,8 @@ for m = 1:length(masks)
 end
 
 % mm is a struct of masks
-modelfun = @(pp,dd) pp(4)*((dd.*[mm{1}*pp(6)+mm{2}*pp(7)+mm{3}*pp(8)+mm{4}*pp(9)+mm{5}*pp(10)]*...
-    vflatten(makegaussian2d(stimSize,pp(1),pp(2),pp(3),pp(3),xx,yy,0,0)/(2*pi*pp(3)^2))).^pp(5));
+modelfun = @(pp,dd) pp(4)*((dd.*[mm{1}*pp(5)+mm{2}*pp(6)+mm{3}*pp(7)+mm{4}*pp(8)+mm{5}*pp(9)]*...
+    vflatten(makegaussian2d(stimSize,pp(1),pp(2),pp(3),pp(3),xx,yy,0,0)/(2*pi*pp(3)^2))).^expN);
 
 % define the final model specification.
 model = {{seed       boundsFIX   modelfun} ...
