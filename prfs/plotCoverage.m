@@ -23,7 +23,10 @@ for v = 1:length(vox)
         a = vox(v).params(4); if a>5 a=5; end
         a = a/5;
     else a = 1; end % no alpha scaling
-    h = plotCircle(vox(v).params(2),vox(v).params(1),2*vox(v).params(3)/sqrt(vox(v).params(5))/2,color,a,'edge'); % center
+    if length(vox(v).params)==5 % some flexibility for set-exponent models, but this ain't pretty.
+        expN = vox(v).params(5);
+    else expN = .2; end
+    h = plotCircle(vox(v).params(2),vox(v).params(1),2*vox(v).params(3)/sqrt(expN)/2,color,a,'edge'); % center
     hold on;
 end
 for v = 1:length(vox)

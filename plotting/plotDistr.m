@@ -14,7 +14,7 @@ function plotDistr(condData,whichPlot,condNames,nBins,whichM,doKS)
 if ~exist('nBins','var') nBins = 100; end
 if ~exist('whichM','var') whichM = 3; end
 
-edges = linspace(min([condData{:}]),max([condData{:}]),nBins);
+edges = linspace(min(min([condData{:}])),max(max([condData{:}])),nBins);
 
 for s = 1:length(condData)
     [counts(s,:),bin{s}] =  histc(condData{s},edges);
