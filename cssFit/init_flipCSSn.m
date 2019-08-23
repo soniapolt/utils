@@ -26,8 +26,10 @@ boundsFIX = bounds; boundsFIX(:,5:end) = NaN; % don't fit  weights initially
 
 if inv load('tmpMasksInv.mat'); else
 load('tmpMasks.mat'); end
+%figure;
 for m = 1:length(masks)
     msk = masks{m};
+    %subplot(1,length(masks),m); imagesc(msk(:,:,5));
     mm{m} = reshape(msk(:,:,1:25),size(masks{1},1)^2,25)';
 end
 

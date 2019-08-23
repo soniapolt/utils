@@ -98,7 +98,7 @@ for c = 1:length(fits)
                 'optimoptions', {{'Display' 'off' 'UseParallel' 0}}...
                 );
             
-        elseif strcmp('flipCSSn',whichCSS) && strcmp(fits(1).cond,'Inverted')
+        elseif strcmp('flipCSSn',whichCSS) && strcmp(fits(c).cond,'Inverted')
             % model1 has masks inverted
             opt = struct( ...
                 'stimulus',    stimulus{c}, ...
@@ -119,7 +119,7 @@ for c = 1:length(fits)
                 'dosave',      'modelfit',...
                 'optimoptions', {{'Display' 'off' 'UseParallel' 0}}...
                 );
-            
+                   end 
             
             %%% fit the model
             results = fitnonlinearmodel(opt);
@@ -131,7 +131,7 @@ for c = 1:length(fits)
             % if mod(v,20)==0
             %    save(fitsName,'fits');
             % end
-        end
+
     end
     save(fitsName,'fits');
     timeFit = toc;
