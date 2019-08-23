@@ -52,6 +52,17 @@ switch whichCSS
         modelName = 'kay CSS, no baseline shift';
         [fits.parNames] = deal({'Y','X','sd','gain','exp'});
         [modelfun, model, metric, resampling] = init_kayCSS(stimSize,hem,im.ppd);
+    
+    case 'tempCSSn'
+        expN = .2;
+        modelName = ['template CSS + fixed exponent: ' num2str(expN)];
+        [fits.parNames] = deal({'Y','X','sd','gain','wNose','wMouth','wSkin','wHair','wEyes'});
+        [fits.expN] = deal(expN);
+        [modelfun, model, metric, resampling] = init_tempCSSn(expN,stimSize,hem,im.ppd);
+    case 'tempCSS'            
+        modelName = 'template CSS model';
+        [fits.parNames] = deal({'Y','X','sd','gain','exp','wNose','wMouth','wSkin','wHair','wEyes'});
+        [modelfun, model, metric, resampling] = init_tempCSS(stimSize,hem,im.ppd);
 end
 
 [fits.whichModel] = deal(modelName);
