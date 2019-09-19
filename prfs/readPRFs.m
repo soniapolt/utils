@@ -15,7 +15,14 @@ for v = 1:length(vox)
             if length(vox(v).params)==6 % cssShift model
                 vox(v).baseline = vox(v).params(6); end
             if length(vox(v).params)==9 || length(vox(v).params)==10
+<<<<<<< HEAD
                 vox(v).tempW = vox(v).params(end-4:end); end % five weights for facetemp models
+=======
+                vox(v).tempW = vox(v).params(end-4:end); % five weights for facetemp models
+            elseif length(vox(v).params) == 8 % four weights for intemp models
+            vox(v).tempW = vox(v).params(end-3:end);
+           end 
+>>>>>>> 06504652c6397ce7b17fd57facb8e5b8b63c501c
         end
     end
 

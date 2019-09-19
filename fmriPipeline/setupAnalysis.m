@@ -2,7 +2,7 @@
 clear all; close all;
 
 % RUNS FROM UTILS DIR
-proj = 'invPRF';
+proj = 'sonia/localizers';
 
 if containsTxt(pwd,'Volumes')
 exptDir = ['/Volumes/projects/' proj];
@@ -12,10 +12,10 @@ exptDir = ['/share/kalanit/biac2/kgs/projects/' proj];
 addpath(genpath('/share/kalanit/biac2/kgs/projects/sonia/utils'));
 end
 
-exptVersion = 'fixPRF';
+exptVersion = 'kidLoc';
 exptDir = [exptDir '/' exptVersion '/'];
-session = 'SP181219';
-numRuns = 10;
+session = 'MZ190410';
+numRuns = 4;
 
 if exist([exptDir session '/Stimuli'])==0
 setupFolders(session,exptDir); % do this here if you haven't yet
@@ -24,11 +24,11 @@ end
 % which parts of set-up do we want to run?
 rename = 0;
 pars =0;
-filtIms =1;
+filtIms =0;
 makeAnatLn = 0;
-unpack = 0;
-renameNifti = 0;
-transformNifti = 0;
+unpack = 1;
+renameNifti = 1;
+transformNifti = 1;
 
 
 % first, run setupFolders(session), and transfer the matlab output files
@@ -111,7 +111,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 if renameNifti == 1
     cd([exptDir '/' session]);
-    renameNiftis('run');
+    renameNiftis('l');
     fprintf('Renamed your niftis!\n');
 end
 

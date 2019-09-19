@@ -53,12 +53,33 @@ switch whichCSS
         [fits.parNames] = deal({'Y','X','sd','gain','exp'});
         [modelfun, model, metric, resampling] = init_kayCSS(stimSize,hem,im.ppd);
     
+    case 'flipCSSn'
+        expN = .2;
+        modelName = ['flip CSS + fixed exponent: ' num2str(expN)];
+        [fits.parNames] = deal({'Y','X','sd','gain','wNose','wMouth','wSkin','wHair','wEyes'});
+        [fits.expN] = deal(expN);
+        [modelfun1, model1, metric1, resampling1] = init_flipCSSn(expN,stimSize,hem,im.ppd,1);
+        [modelfun, model, metric, resampling] = init_flipCSSn(expN,stimSize,hem,im.ppd,0);
+   case 'inflipCSSn'
+        expN = .2;
+        modelName = ['int features flip CSS + fixed exponent: ' num2str(expN)];
+        [fits.parNames] = deal({'Y','X','sd','gain','wNose','wMouth','wSkin','wEyes'});
+        [fits.expN] = deal(expN);
+        [modelfun1, model1, metric1, resampling1] = init_inflipCSSn(expN,stimSize,hem,im.ppd,1);
+        [modelfun, model, metric, resampling] = init_inflipCSSn(expN,stimSize,hem,im.ppd,0);
+        
     case 'tempCSSn'
         expN = .2;
         modelName = ['template CSS + fixed exponent: ' num2str(expN)];
         [fits.parNames] = deal({'Y','X','sd','gain','wNose','wMouth','wSkin','wHair','wEyes'});
         [fits.expN] = deal(expN);
-        [modelfun, model, metric, resampling] = init_tempCSSn(expN,stimSize,hem,im.ppd);
+        [modelfun, model, metric, resampling] = init_tempCSSn(expN,stimSize,hem,im.ppd); 
+   case 'intempCSSn'
+        expN = .2;
+        modelName = ['int features template CSS + fixed exponent: ' num2str(expN)];
+        [fits.parNames] = deal({'Y','X','sd','gain','wNose','wMouth','wSkin','wEyes'});
+        [fits.expN] = deal(expN);
+        [modelfun, model, metric, resampling] = init_intempCSSn(expN,stimSize,hem,im.ppd);  
     case 'tempCSS'            
         modelName = 'template CSS model';
         [fits.parNames] = deal({'Y','X','sd','gain','exp','wNose','wMouth','wSkin','wHair','wEyes'});
@@ -91,6 +112,17 @@ for c = 1:length(fits)
                 'optimoptions', {{'Display' 'off' 'UseParallel' 0}}...
                 );
             
+        elseif containsTxt(whichCSS,'flip') && strcmp(fits(c).cond,'Inverted')
+            % model1 has masks inverted
+            opt = struct( ...
+                'stimulus',    stimulus{c}, ...
+                'data',        fits(c).vox(v).betas, ...
+                'model',       {model1}, ...
+                'resampling',  resampling1, ...
+                'metric',      metric1, ...
+                'dosave',      'modelfit',...
+                'optimoptions', {{'Display' 'off' 'UseParallel' 0}}...
+                );      
         else
             opt = struct( ...
                 'stimulus',    stimulus{c}, ...
@@ -101,7 +133,7 @@ for c = 1:length(fits)
                 'dosave',      'modelfit',...
                 'optimoptions', {{'Display' 'off' 'UseParallel' 0}}...
                 );
-            
+                   end 
             
             %%% fit the model
             results = fitnonlinearmodel(opt);
@@ -113,7 +145,7 @@ for c = 1:length(fits)
             % if mod(v,20)==0
             %    save(fitsName,'fits');
             % end
-        end
+
     end
     save(fitsName,'fits');
     timeFit = toc;
