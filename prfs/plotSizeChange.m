@@ -22,10 +22,10 @@ if ~exist('plotOff','var');
     end
 end
 for v = 1:length(vox1)
-    % calculate color
-    size1 = [2*vox1(v).params(3)/sqrt(vox1(v).params(5))];
-    size2 = [2*vox2(v).params(3)/sqrt(vox2(v).params(5))];
-    sizeCh(v) = size2-size1;
+%     % calculate color
+%     size1 = [2*vox1(v).params(3)/sqrt(vox1(v).params(5))];
+%     size2 = [2*vox2(v).params(3)/sqrt(vox2(v).params(5))];
+    sizeCh(v) =vox2(v).size-vox1(v).size;
     
     if sizeCh(v) == 0
         col = colors{3};

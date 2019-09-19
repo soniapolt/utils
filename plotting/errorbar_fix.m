@@ -1,6 +1,6 @@
 function [hb] = errorbar_fix(ha,color)
 % removes horizontal ticks in errorbars
-hb = get(ha,'children'); 
+hb = get(ha,'children');
 Xdata = get(hb(2),'Xdata');
 temp = 4:3:length(Xdata);
 temp(3:3:end) = [];
@@ -12,7 +12,7 @@ Xdata(xleft) = 0;
 Xdata(xright) = 0;
 set(hb(2),'Xdata',Xdata);
 if ~exist('color','var')
-set(hb(2),'Color','k');
-else set(hb(2),'Color',color);  
+    set(hb(2),'Color','k');
+else set(hb(2),'Color',color);
 end
 
