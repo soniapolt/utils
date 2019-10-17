@@ -12,7 +12,7 @@ switch expt
         
     case 'fixPRF'
         
-        s = {'AS' 'EM' 'JG' 'SP' 'TH' 'AR' 'MN' 'DF' 'MG'};
+        s = {'AS' 'EM' 'JG' 'SP' 'TH' 'AR' 'MN' 'DF' 'MG' 'MH' 'JP' 'JW' 'JC' 'JJ' 'MZ'};
         
         subj(1).sess = {'AS180807'};
         subj(1).runNums = [9];
@@ -40,6 +40,24 @@ switch expt
         
         subj(9).sess = {'MG181119'};
         subj(9).runNums = [10];
+        
+        subj(10).sess = {'MH190927'};
+        subj(10).runNums = [10];
+        
+        subj(11).sess = {'JP190906'};
+        subj(11).runNums = [10];
+        
+        subj(12).sess = {'JW191007'};
+        subj(12).runNums = [10];
+        
+        subj(13).sess = {'JC191004'};
+        subj(13).runNums = [8];
+        
+        subj(14).sess = {'JJ191004'};
+        subj(14).runNums = [10];
+        
+        subj(15).sess = {'MZ191011'};
+        subj(15).runNums = [10];
         
     case 'compPRF'
         s = {'SP' 'DF' 'EM' 'TH' 'JG' 'MG'};

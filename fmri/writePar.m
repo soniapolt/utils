@@ -20,6 +20,8 @@ for r = numRuns
     matname = [inputDir '/' expt '_' num2str(r) '.mat'];
     
     load(matname);
+    checkDir(outputDir);
+    fullfile(outputDir,parname)
     fid = fopen(fullfile(outputDir,parname), 'w');
     %fid = fopen(parname, 'w');
     for t = 1:length(trial)

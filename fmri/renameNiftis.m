@@ -14,14 +14,18 @@ if sum((strncmp(fileNames, '._',1)))>0
 
 % renames prescans
 for n = 1:length(preScans)
-    s = dir(['*' preScans{n} '*.nii.gz']);
     
+    try
+    s = dir(['*' preScans{n} '*.nii.gz']);
     movefile(s(1).name,[preScans{n} '.nii.gz']);
     fprintf('Renamed %s to %s...\n',s(1).name,[preScans{n} '.nii.gz']);
-    
+  
     for m = 2:length(s)
         movefile(s(m).name,[preScans{n} '_' num2str(m) '.nii.gz']);
         fprintf('Renamed %s to %s...\n',s(m).name,[preScans{n} '_' num2str(m) '.nii.gz']);
+    end
+    catch
+        fprintf('**Can''t rename %s...\n',preScans{n});
     end
 end
 
@@ -31,7 +35,7 @@ if length(s)>0
     delete(s.name);
 end
 
-s = dir(['*BOLD*.nii.gz']);
+s = dir(['*_*_*.nii.gz']); % now we're not looking for things named BOLDEPI (older version of unpakc flywheel) - this should lead to fewer mistakes with naming/ordering
 epis = natsort({s.name}); % sorts according to number prefix
 
 for n = 1:length(epis)

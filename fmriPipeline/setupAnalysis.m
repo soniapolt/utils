@@ -2,7 +2,7 @@
 clear all; close all;
 
 % RUNS FROM UTILS DIR
-proj = 'sonia/localizers';
+proj = 'invPRF';
 
 if containsTxt(pwd,'Volumes')
 exptDir = ['/Volumes/projects/' proj];
@@ -12,24 +12,23 @@ exptDir = ['/share/kalanit/biac2/kgs/projects/' proj];
 addpath(genpath('/share/kalanit/biac2/kgs/projects/sonia/utils'));
 end
 
-exptVersion = 'kidLoc';
+exptVersion = 'fixPRF';
 exptDir = [exptDir '/' exptVersion '/'];
-session = 'MZ190410';
-numRuns = 4;
+session = 'MZ191011';
+numRuns = 10;
 
 if exist([exptDir session '/Stimuli'])==0
 setupFolders(session,exptDir); % do this here if you haven't yet
 end
 
 % which parts of set-up do we want to run?
-rename = 0;
-pars =0;
-filtIms =0;
-makeAnatLn = 0;
+rename = 1;
+pars =1;
+filtIms =1;
 unpack = 1;
 renameNifti = 1;
 transformNifti = 1;
-
+makeAnatLn = 1;
 
 % first, run setupFolders(session), and transfer the matlab output files
 % from the scan computer to Stimuli/output directory
@@ -78,15 +77,16 @@ end
 % 1 = binary, 2 = photo, 3 = edge
 
 if filtIms == 1
-    for ii = [2 5] %1:2 % default = just binary & photo
+    %for ii = [2 5] %1:2 % default = just binary & photo
         switch exptVersion
             case 'invPRF3'
         invPRF3_writeFiltIms(ii,session,exptDir,exptVersion,[1:numRuns])
             case 'fixPRF'
-                fixPRF_writeFiltIms(ii,session,dirOf(exptDir,1),[1:numRuns])
+                fixPRF_writeFiltIms('photo',session,dirOf(exptDir,1),[1:numRuns])
+                fixPRF_writeFiltIms('internal',session,dirOf(exptDir,1),[1:numRuns])
             case 'compPRF'
                 compPRF_writeFiltIms(ii,session,dirOf(exptDir,1),[1:numRuns])
-        end
+        %end
     end
     fprintf('Wrote mean images from the scanner stimuli!!\n');
 end
@@ -111,7 +111,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 if renameNifti == 1
     cd([exptDir '/' session]);
-    renameNiftis('l');
+    renameNiftis('prf');
     fprintf('Renamed your niftis!\n');
 end
 
@@ -133,4 +133,5 @@ if makeAnatLn == 1
    makeAnatLink(session(1:2));
 end
 
-cd([dirOf(exptDir,2) 'sonia/utils/fmriPipeline']);
+cd([exptDir session])
+%cd([dirOf(exptDir,2) 'sonia/utils/fmriPipeline']);

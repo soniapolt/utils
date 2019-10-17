@@ -14,10 +14,10 @@
 % fill in this info:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-expt = 'lateralPRFs/data/toonRet';%/invPRF/compPRF';%
+expt = 'sonia/retinotopy';%/invPRF/compPRF';%
 exptDir = fullfile('/share/kalanit/biac2/kgs/projects/',expt);
 
-session = 'mg090618_ret';
+session = 'mz190410';
 local = 1;              % remember, we start with local (/Gray/ROIs) labels!
 
 %%%% which ROIs
