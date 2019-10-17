@@ -6,11 +6,11 @@
 % rl 08/2014
 % Adapted by JG 03/2016
 clear all; close all; clc;
-dataDir = '/share/kalanit/biac2/kgs/projects/lateralPRFs/data/toonRet/';
+dataDir = '/share/kalanit/biac2/kgs/projects/sonia/retinotopy/'%lateralPRFs/data/toonRet/';
 cd(dataDir);
 error={};
 
-session = 'ar092018_ret'
+session = 'mz190410'
 
 % list of knk scan number, corresponding to session list
 list_numKnk = 1;
