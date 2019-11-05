@@ -9,16 +9,17 @@
 clear all; close all;
 
 
-whichMontage = 'ret';%'ret'; %'ret' or 'face'\
-montName = 'ret';%'v4';
+whichMontage = 'ret';%'ret';%'ret'; %'ret' or 'face'\
+montName = 'v4';%'v4';
 
 % inputs for this experiment
-in.roi = standardROIs('EVC');%{'hV4'};%
+in.roi = [{'hV4'} standardROIs('face+')];%;%
 
 in.expt = 'fixPRF';
-in.hem ='lh';
-in.subjs = {'JG' 'MZ' 'MG' 'JW'  'MG' 'JP' 'MN' 'SP' 'TH' 'EM' 'DF' 'JJ'}
-in.imagefile = [in.expt '_' in.hem '_' montName '_N' num2str(length(in.subjs)) '.png'];
+in.hem ='rh';
+in.subjs =  prfSubjs;%' 'MH'};% 'MZ' 'JW' 'MH' 'MG' 'JP' 'MN' 'SP' 'TH' 'EM' 'DF' 'JJ'}
+in.suffix = '';%'_t2.3';
+in.imagefile = [in.expt '_' in.hem '_' montName '_N' num2str(length(in.subjs))  in.suffix '.png'];
 
 %%%%%%%%%
 % some defaults
@@ -28,30 +29,29 @@ in.outDir = [in.dataDir '/montages'];
 in.L.ambient = [.5 .5 .4];
 in.L.diffuse = [.3 .3 .3];
 
-in.meshAngle='lat_vent';%rh_Medialzoom';%'rh_lat';%
+in.meshAngle='Ventralzoom';%'fixPRF_face';%rh_Medialzoom';%'rh_lat';%
 in.meshNames={'inflated_200_1.mat' 'smooth_200_1.mat' 'smoothed_200_1.mat'};
 in.clip=1;
 
-in.nrows=3;
-in.ncols=4;
+[in.nrows,in.ncols] = subplotDims(length(in.subjs),4); 
 in.colbar=0; %0 = no color bar
 
 if strcmp(montName,'face') 
     baseDir = 'faceLoc'; 
     in.whatMap = 'map'; 
-    in.colors = {'y' 'm' 'r' 'w' 'c'}; 
+    in.colors = {'k' 'y' 'm' 'r' 'w' 'c'}; 
     in.windowmin= 2.3;
-    in.windowmax = 15;
+    in.windowmax = 10;
 
 else baseDir = 'Retinotopy'; 
     in.whatMap='ph'; % ph = phase, ec = eccentricity, amp = pRF size; map = parameter map'
-    in.colors = {'y' 'k' 'w' 'k' 'w' 'k' 'w' 'k', 'w'}; 
+    in.colors = {'k' 'y' 'm' 'r' 'w' 'c'}; %{'y' 'k' 'w' 'k' 'w' 'k' 'w' 'k', 'w'}; 
     in.windowmin= 0.5;
     in.windowmax = 80;
 end
 
 
-f = niceFig([.5 .5 .6 .6]);
+f = niceFig([.1 .1 .9 .9]);
 pause(1);
 
 %%%%%%%%%
@@ -108,25 +108,36 @@ for i =1:length(in.subjs)
     % Load and clip the parameter map
     switch whichMontage
         case 'ret'
-            in.map = 'retModel-cssFit-fFit.mat';
-            hG = rmSelect(hG,1,in.map);
-            if strcmp(in.whatMap,'none')
-            else hG = rmLoadDefault(hG); end;
+            mapVariants = {'retModel-cssFit-fFit.mat' 'retModel-css-fFit.mat'};
+            n=0; ok = 0;
+            while ~ok && n < length(mapVariants)
+            n=n+1;
+            [hG,ok]  = rmSelect(hG,1,mapVariants{n});
+            end
+            
+            if ok
+                fprintf('** Using Map: %s\n',mapVariants{n});
+                hG = rmLoadDefault(hG);
+            else fprintf('** Could not load ret map\n'); end
+            
         case 'face'
             % Load and clip the parameter map
-            mapVariants = {'face-vs-all' 'Face1Face2' 'FacesVsAll' 'Faces-vs-allnonFace' 'Faces_vs_all' 'faceadultfacechildVBodyLimbCarGuitarPlaceHouseWordNumber'};
+            mapVariants = {'face-vs-all' 'Face1Face2' 'FacesVsAll' 'facesVSall' 'Faces-vs-allnonFace' 'Faces_vs_allnonFace' 'Faces_vs_all' 'faceadultfacechildVBodyLimbCarGuitarPlaceHouseWordNumber'};
             n=0; ok = 0;
             while ~ok && n < length(mapVariants)
             n=n+1;
             [hG,ok] = loadParameterMap(hG,[mapVariants{n} '.mat']);
             end
+            if ok
+                fprintf('** Using Map: %s\n',mapVariants{n});
+            else fprintf('** Could not load par map\n'); end
     end
     
     %%%%%%%%% which map do you want to load %%%%
     % JG hardcoded a preset colormap for montage consistency
-            cmapFile = '/sni-storage/kalanit/biac2/kgs/projects/Longitudinal/FMRI/Retinotopy/code/Images/kidMap.mat';
-            load(cmapFile);
-            hG.ui.phMode.cmap = cmap;
+            %cmapFile = '/sni-storage/kalanit/biac2/kgs/projects/Longitudinal/FMRI/Retinotopy/code/Images/kidMap.mat';
+            %load(cmapFile);
+            %hG.ui.phMode.cmap = cmap;
     switch in.whatMap
         case 'ph'
             hG=setDisplayMode(hG,'ph');
@@ -134,7 +145,7 @@ for i =1:length(in.subjs)
             hG.ui.displayMode='ph';
             hG.ui.phMode=setColormap(hG.ui.phMode, 'blueredyellowCmap');
             hG = cmapPolarAngleRGB(hG, 'both');
-            
+            cmap =hG.ui.mapMode.cmap;
         case 'amp'
             hG=setDisplayMode(hG,'amp');
             hG=refreshScreen(hG,1);
@@ -148,8 +159,10 @@ for i =1:length(in.subjs)
             hG=setDisplayMode(hG,'map');
             hG=refreshScreen(hG,1);
             hG.ui.displayMode='map';
-            %cmap =hsvCmap;
-            %hG.ui.mapMode=setColormap(hG.ui.mapMode,'hsvCmap');
+            
+            hG.ui.mapMode.clipMode = [in.windowmin in.windowmax];
+            hG.ui.mapMode=setColormap(hG.ui.mapMode,'autumnCmap');
+            cmap =hG.ui.mapMode.cmap;
             hG=setMapWindow(hG, [in.windowmin in.windowmax]);     
     end
     
@@ -176,6 +189,7 @@ for i =1:length(in.subjs)
     catch
     [mesh1, settings]=meshRetrieveSettings(hG.mesh{1}, [in.hem '_Ventralzoom']);
     end
+    
     % Recompute vertex
     vertexGrayMap = mrmMapVerticesToGray(...
         meshGet(mesh1, 'initialvertices'),...

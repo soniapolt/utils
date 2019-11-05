@@ -4,8 +4,9 @@ function thisROI = vpnlROI(thisROI,subj,expt)
 if ~exist('expt','var') || ~strcmp(expt,'invPRF3') % defaults
     expt = 'defaults';
     initials = {'JG'            'SP'                'EM'            'AS'        'TH'            'AR'            'MN'            'DF'            'MG'            'MH'            'JP'        'JJ'            'JC'            'JW'            'MZ'};
-    ret = {     'toonRet_f_'    'toonRet_f_'        'toonRet_f_'    'wfCSS_f_'  'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'longi_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'};
-    face = {    'latprf_f_'     'latprf_f_'         'latprf_f_'     'f_'        'fLoc_f_'       'fLoc_f_'       'fLoc_f_'       'latprf_f_'     'latprf_f_'     'fLoc_f_'     'latprf_f_'   'kidLoc_f_'     'kidLoc_f_'     'latprf_f_'     'kidLoc_f_'};
+    ret = {     'longi_'    'toonRet_f_'        'toonRet_f_'    'wfCSS_f_'  'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'longi_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'};
+    face = repmat({'fixPRF_f_'},1,length(initials));
+    %face = {    'fibeRFs_f_'     'latprf_f_'         'latprf_f_'     'f_'        'fLoc_f_'       'fLoc_f_'       'fLoc_f_'       'latprf_f_'     'latprf_f_'     'fLoc_f_'     'latprf_f_'   'kidLoc_f_'     'kidLoc_f_'     'latprf_f_'     'kidLoc_f_'};
     
 else
     switch expt
