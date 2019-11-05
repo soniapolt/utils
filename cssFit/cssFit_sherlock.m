@@ -93,6 +93,8 @@ thisROI= vpnlROI([hem '_' ROI],session(1:2),expt);
 checkDir(dirOf(fitsName));
 load(dataName);
 
+fprintf('Starting on %s...\n',fitsName);
+
 for c = 1:length(fits)
     fits(c).ROIname = thisROI;
     fits(c).vox = [];
@@ -149,6 +151,6 @@ for c = 1:length(fits)
     end
     save(fitsName,'fits');
     timeFit = toc;
-    fprintf('%s modelFit finished %s %s%s at %s, took %s mins\n',whichCSS,session,hem,ROI,datestr(now),num2str(timeFit/60));
+    fprintf('%s modelFit finished %s %s %s at %s, took %s mins\n',whichCSS,session,fits(c).cond,vpnlROI([hem '_' ROI],session(1:2)),datestr(now),num2str(timeFit/60));
 end
 
