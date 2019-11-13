@@ -3,7 +3,8 @@ function niceSave(figDir,fName,ROIs,subjs,formats,painters)
 % saves a few versions of the current figure
 % default is png
 if ~exist('formats','var')
-    formats= {'png'}; end
+    if onLaptop formats= {'png'}; else formats= {'fig'}; end
+end
 
 % does the figure directory exist?
 checkDir(figDir);
@@ -33,9 +34,9 @@ set(gcf, 'PaperPositionMode', 'auto');
 % openGL preserves transparency, but doesn't allow great image
 % manipulation in illustrator
 if exist('painters','var')
-    set(gcf,'renderer','Painters');
-else
     set(gcf,'renderer','OpenGL');
+else
+    set(gcf,'renderer','Painters');
 end
 
 
@@ -43,7 +44,12 @@ end
 for n = 1:length(formats)
     
     fprintf(['Saving to: ' [figDir fName addText '.' formats{n}] '...\n']);
-    saveas(gcf,[figDir fName addText '.' formats{n}],formats{n});
+    if containsTxt(formats{n},'png')
+       try fig = gcf; fig.PaperPositionMode= 'auto';
+       catch set(gcf, 'PaperPositionMode', 'auto'); end
+        print(gcf,[figDir fName addText],'-dpng');
+    else
+    saveas(gcf,[figDir fName addText '.' formats{n}],formats{n}); end
     % and say so
     
 end
