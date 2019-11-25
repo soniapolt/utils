@@ -16,7 +16,7 @@ function fixPRF_writeFiltIms(which,session,exptDir,runs)
 
 %which = 'external'; session = 'SP181219'; exptDir = '/share/kalanit/biac2/kgs/projects/invPRF'; runs = 8;
 
-im.name = {'binary' 'photo' 'edge' 'edge2' 'internal' 'external','eyes'};
+im.name = {'binary' 'photo' 'edge' 'edge2' 'internal' 'external','eyes','outline'};
 im.which = cellNum(which,im.name);
 
 im.subj = session;
@@ -84,11 +84,12 @@ for r = im.runs
             end
             faceM = mean(faces,3);
             rect = CenterRectOnPoint([1 1 condSizes{condition(TR(n).cond).stim}],im.centers(condition(TR(n).cond).pos,1),im.centers(condition(TR(n).cond).pos,2));
+            
             if im.which == 1 % binary
                 % insert disk at face location
                 c=insertShape(zeros(im.diam,im.diam),'FilledCircle',[im.diam/2 im.diam/2 im.diam/2],'Color','White','Opacity',1);
                 thisIm(rect(1):rect(3),rect(2):rect(4)) = c(:,:,1);
-            elseif im.which == 2 || im.which > 4 % photo
+            elseif im.which == 2 || im.which == 5 || im.which == 6 || im.which == 7 % photo
                 % subtract background, take absolute value, divide by max
                 faceM = abs(faceM-params.backgroundColor);
                 thisIm(rect(1):rect(3),rect(2):rect(4)) = faceM;
@@ -112,9 +113,9 @@ for r = im.runs
                 % divide by max (in a slightly different way that others - done
                 % after all ims are aggregated
                 thisIm(rect(1):rect(3),rect(2):rect(4)) = sqrt((faceM-params.backgroundColor).^2);
-%             elseif im.which == 6
-%                 % no transform
-%                 thisIm(rect(1):rect(3),rect(2):rect(4)) = faceM;end
+            elseif im.which == 8
+                % no transform
+                thisIm(rect(1):rect(3),rect(2):rect(4)) = faceM;%end
             end
             if isempty(condIms{TR(n).cond})
                 condIms{TR(n).cond} = thisIm;
@@ -138,4 +139,4 @@ else
 end
 
 save([outputDir im.subj '_condAvg_' im.name{im.which} '.mat'],'condAvg','im');
-%implay(condIms);
+% implay(condIms);
