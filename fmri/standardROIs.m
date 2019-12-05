@@ -9,7 +9,7 @@ elseif containsTxt(which,'face+')
 elseif containsTxt(which,'face-')
     n = 5:7;
 elseif containsTxt(which,'face')
-    n = 5:9;
+    n = 5:8;
 elseif containsTxt(which,'EVC')
     n = 1:4;
 else n = which;

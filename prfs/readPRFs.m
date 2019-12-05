@@ -10,6 +10,8 @@ for v = 1:length(vox)
         vox(v).exp = expN; else vox(v).exp = vox(v).params(5); end
     vox(v).size = 2*vox(v).sdDeg/sqrt(vox(v).exp); % PRF size is defined as S/sqrt(N) - by KK
     vox(v).XYdeg = [(vox(v).params(2)-res/2)/ppd -(vox(v).params(1)-res/2)/ppd];
+    vox(v).Xdeg = (vox(v).params(2)-res/2)/ppd;
+    vox(v).Ydeg = -(vox(v).params(1)-res/2)/ppd;
     vox(v).eccen = sqrt(vox(v).XYdeg(1)^2+vox(v).XYdeg(2)^2);
     vox(v).gain = vox(v).params(4);
     if length(vox(v).params)==6 % cssShift model

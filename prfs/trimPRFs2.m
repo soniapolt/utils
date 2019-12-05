@@ -12,8 +12,8 @@ function [trim] = trimPRFs2(vox,ppd,res)
 % ppd = 30; res = 330;
 
 minEccen = 0.125;               % minimum eccentricity (usually corresponds to fixation dot)
-minSize = 0.45;                 % in deg, size = [2xSD/sqrt(N)]
-maxSize = res/ppd-1;          % in deg
+minSize = 0.1;                 % in deg, size = [2xSD/sqrt(N)]
+maxSize = res/ppd-.1;          % in deg
 trimEdge = .25*ppd;             % edge of stimulus, in pix
 trimSD= res-.25*ppd;            % trim whole-field SD estimates (in addition to size)
 maxShift = 5;                   % absolute value of max shift
