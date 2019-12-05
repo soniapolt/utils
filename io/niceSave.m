@@ -3,7 +3,8 @@ function niceSave(figDir,fName,ROIs,subjs,formats,painters)
 % saves a few versions of the current figure
 % default is png
 if ~exist('formats','var')
-    if onLaptop formats= {'png'}; else formats= {'fig'}; end
+    formats= {'png'};
+   % if onLaptop formats= {'png'}; else formats= {'fig'}; end
 end
 
 % does the figure directory exist?

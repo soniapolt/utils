@@ -10,7 +10,7 @@ set(gca,'box','off','color','none');
 if exist('plotMed','var')
 vv = vline(nanmedian(data),'k:',['Med = ' num2str(nanmedian(data))]); set(vv,'Color',color,'LineWidth',2);
 end
-v = vline(0,'k:');
+v = vline(0,'k:'); set(v,'LineWidth',2);
 
 end
 

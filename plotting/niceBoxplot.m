@@ -1,7 +1,7 @@
 function b = niceBoxplot(data,labels,plotMed,colors,cutY)
 % colors needs to be in n-by-3 matrix
 % plotMed will label the medians
-% cutY sets a
+% cutY sets a ylimit
 axis square;
 
 if ~exist('colors','var')
@@ -15,7 +15,7 @@ for x = 1:length(c) set(c(x),'Color',colors(x,:)); set(b(x),'Color',colors(x,:))
 h = findobj(gca,'tag','Outliers');
 set(h,'MarkerEdgeColor',[.5 .5 .5]);
 
-if exist('cutY','var')
+if exist('cutY','var') && ~isempty(cutY)
     ylim(cutY); end
 
 
@@ -27,7 +27,7 @@ if exist('plotMed','var')
         med = get(m(s),'YData');
         txt = [labels{s} ' = ' num2str(med(1))];
         yl = ylim;
-        t = text(s+.1,yl(1)+(yl(2)*.2*s),txt); set(t,'Color','k','FontSize',12);
+        t = text(s+.1,yl(1)+(yl(2)*.1*s),txt); set(t,'Color','k','FontSize',12);
     end
 end
 
