@@ -9,7 +9,7 @@ if ~isempty(parNum)
     pars = vertcat(fits.vox.params);
     pars = pars(:,parNum)';
 else
-    eval(['pars = [fits(c).vox.' parName '];']);  end
+    eval(['pars = [fits.vox.' parName '];']);  end
 
 
 %%% check that we have it
