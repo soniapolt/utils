@@ -11,8 +11,7 @@ xleft = temp; xright = temp+1;
 Xdata(xleft) = 0;
 Xdata(xright) = 0;
 set(hb(2),'Xdata',Xdata);
-if ~exist('color','var')
-    set(hb(2),'Color','k');
-else set(hb(2),'Color',color);
+if exist('color','var')
+set(hb(2),'Color',color);end
 end
 
