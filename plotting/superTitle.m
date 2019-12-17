@@ -8,7 +8,7 @@ pos = [0, vertPos,1,.05];  end
 
 axes('Position',pos);
 set(gca,'visible','off');
-text(.5,0,titleText,'FontSize',titleSize,'FontWeight','bold','HorizontalAlignment','Center','VerticalAlignment','Bottom','Interpreter','none');
+handle = text(.5,0,titleText,'FontSize',titleSize,'FontWeight','bold','HorizontalAlignment','Center','VerticalAlignment','Bottom','Interpreter','none');
 
 end
 
