@@ -1,9 +1,11 @@
 
-function [boot] = bootCoverage(vox,method,iters,numVox,doNorm)
+function [boot] = bootCoverage(vox,method,iters,propVox,doNorm)
 % vox is a structure of v voxels with a params field
+% in this version, voxel number is given as a proportion and not a constant
 
 boot.numIters = iters;
-boot.numVox = numVox; if boot.numVox < length(vox) boot.numVox = length(vox); end
+boot.propVox = propVox;
+boot.numVox = round(propVox * length(vox));
 boot.ppd = 10;
 boot.res = 11 * boot.ppd;
 boot.method = method; % 'max' or 'mean'
@@ -20,19 +22,19 @@ end
 covIm = zeros(boot.numIters,size(allPRFs,2),size(allPRFs,3));
 
 % iteratively grab these
-    parfor b = 1:length(boot.numIters)
+    parfor b = 1:boot.numIters
     v = datasample([1:length(vox)],boot.numVox,'Replace',true)
     cov = allPRFs(v,:,:);
     
-    % to deal with the issue of plot/imagesc using different coordinate systems
-    cov = squeeze(cov);
-    
+    if boot.numVox>1
     switch boot.method
         case 'max'
             cov = max(cov);
         case 'mean'
             cov = mean(cov);
     end
+    end
+    
     covIm(b,:,:) = cov;
     end
 
@@ -44,8 +46,8 @@ covIm = zeros(boot.numIters,size(allPRFs,2),size(allPRFs,3));
  % area of coverage
 threshIm = im2bw(boot.covIm,max(boot.covIm(:))/2); % half-max of pRF coverage
 boot.areaDeg = sum(threshIm(:))/(boot.ppd*boot.ppd);
-boot.centers = vox.XYdeg;
-boot.size = vox.size;
+boot.centers = vertcat(vox.XYdeg);
+boot.size = vertcat(vox.size);
 % boot.allCov = allPRFs; % this file becomes very large
  
  

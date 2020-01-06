@@ -17,6 +17,9 @@ sizeCol = [.15 .15 .15]; % color for lines demarcating pRF size (currently black
 % set hem colors
 if size(color,1) == 1; color = [color;color*.25]; end%
 
+% default plot pRF size as an empty circle
+if ~exist('plotSize','var'); plotSize = 1; end
+
 %%%% sample a subset of voxels randomly
 if exist('sampleVox','var') && sampleVox
     sv = randperm(length(vox));

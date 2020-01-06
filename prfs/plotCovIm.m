@@ -1,13 +1,10 @@
-function [areaDeg] = plotCovIm(covIm,res,ppd,showColorBar,dontScale)
+function [areaDeg,boundary] = plotCovIm(covIm,res,ppd,showColorBar)
 % separating out the making (either via bootstrapping or other) and
 % plotting of coverage
 
 covIm = flipud(covIm); % fixes Y-axis discrepancy between prf fitting codes and matlab's plotting functions
-    
-if ~exist('dontScale','var') || ~dontScale
-imagesc(covIm);
-else imshow(covIm);
-end
+
+imshow(covIm);
 
 set(gca,'visible','off'); colormap(mrvColorMaps('jet'));%('parula');%
 
@@ -42,5 +39,6 @@ pos = get(gca,'Position'); %[left, bottom, width, height].
 barpos =  [pos(1)+pos(3)+.005, pos(2), .005, pos(4)];
 c = colorbar('FontSize',10,'Box','off','Position',barpos);
 end
+brighten(-.5);
 end
 
