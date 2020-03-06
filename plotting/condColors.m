@@ -1,7 +1,7 @@
 function c = condColors(condNum,rainbow)
 % now allow call to more than one color returned
 if ~exist('rainbow','var')
-    condColors = {[191 66 244]/255 [0 128 0]/255 [76 94 255]/255 [244 104 65]/255};
+    condColors = {[78 45 140]/255 [0 135 203]/255 [255 197 18]/255 [244 104 65]/255};
 else
     condColors = {
         [238 17 0]/255     % red
