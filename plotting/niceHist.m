@@ -1,16 +1,22 @@
-function niceHist(data,color,plotMed)
+function niceHist(data,colors,plotMed)
+% data should be size (observations, group) or vector
 % well-colored histogram plot with option to plot a line at its median;
 % default plots a line at 0
+% now lets us plot multiple histograms on the same axis
+if size(data,1) == 1 data = data'; end
 
-hold on; hist(data,100); axis square;
+for c = 1:size(data,2)
+hold on; hist(data(:,c),100);
 h = findobj(gca,'Type','patch');
-set(h,'FaceColor',color,'FaceAlpha',.5,'EdgeAlpha',0);
-set(gca,'box','off','color','none');
+set(h(1),'FaceColor',colors(c,:),'FaceAlpha',1,'EdgeAlpha',0);
 
-if exist('plotMed','var')
-vv = vline(nanmedian(data),'k:',['Med = ' num2str(nanmedian(data))]); set(vv,'Color',color,'LineWidth',2);
+if exist('plotMed','var') && plotMed
+vv = vline(nanmedian(data(:,c)),'k:',['Med = ' num2str(nanmedian(data(:,c)))]); set(vv,'Color',colors(c,:),'LineWidth',2);
 end
-v = vline(0,'k:'); set(v,'LineWidth',2);
+
+end
+set(gca,'box','off','color','none'); axis square;
+%v = vline(0,'k:'); set(v,'LineWidth',2);
 
 end
 

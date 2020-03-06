@@ -2,7 +2,7 @@ function s = scatterCent(x,y,color,xlab,ylab,titleTx,fontSize,equalLims,line)
 % scatterplot with centroid & std
 % if whichLine == 1, plot ID line; if whichLine == 2, plot lsqfit line
 
-s = scatter(x,y,30,color); hold on;
+s = scatter(x,y,10,'filled'); hold on;
 
 % centroid & std
 

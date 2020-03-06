@@ -20,7 +20,7 @@ if exist('cutY','var') && ~isempty(cutY)
 
 
 set(gca,'box','off','color','none');
-if exist('plotMed','var')
+if exist('plotMed','var') && plotMed
     m = findobj(gca,'tag','Median');
     m= flipud(m);
     for s = 1:length(labels)

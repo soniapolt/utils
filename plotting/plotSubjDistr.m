@@ -19,7 +19,7 @@ if ~exist('doT','var') doT = 0; end
 edges = linspace(min([subjData{:}]),max([subjData{:}]),nBins);
 
 for s = 1:length(subjData)
-    [counts(s,:),bin(s,:)] =  histc(subjData{s},edges);
+    [counts(s,:),~] =  histcounts(subjData{s},edges,'Normalization','probability');
 end
 
 if whichPlot == 1 || whichPlot ==3

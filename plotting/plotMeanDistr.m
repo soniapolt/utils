@@ -1,6 +1,6 @@
 
-function [h,peak,counts] =  plotMeanDistr(cData,nBins,color)
-% function plotMeanDistr(cData,nBins,color,whichM)
+function [h,meds,counts] =  plotMeanDistr(cData,nBins,color,plotSummary)
+% function plotMeanDistr(cData,nBins,color)
 % data is in form pars{s,c} so we preserve the distribution for each
 % subject
 % plots a distribution of some value (like XY shift) over subjects,
@@ -8,27 +8,34 @@ function [h,peak,counts] =  plotMeanDistr(cData,nBins,color)
 % not voxel count) and then averaging those distributions
 
 %cData = sPars(:,c);
-
+if ~exist('plotSummary','var') plotSummary = 0; end
 if ~exist('nBins','var') nBins = 100; end
-if ~exist('whichM','var') whichM = 3; end
 
 edges = linspace(min(min([cData{:}])),max(max([cData{:}])),nBins);
 for s = 1:length(cData)
     [counts(s,:),bin{s}] =  histc(cData{s},edges);
     % normalize within subjects
     counts(s,:) = counts(s,:)./sum(counts(s,:));
+    meds(s) = nanmedian(cData{s});
 end
 
 mcount = nanmean(counts);
-peak = edges(find(mcount == nanmax(mcount)));
+% peak = edges(find(mcount == nanmax(mcount)));
+summary = nanmean(meds); whichSummary = 'Median Avg.';
 h = shadedErrorBar(edges,mcount,se(counts),color); hold on;
-
-
-hold on; vv = vline(peak,'k:'); set(vv,'Color',color,'LineWidth',2);
 yl = ylim;
+
+
+if plotSummary
+hold on; vv = vline(summary,'k'); set(vv,'Color',color,'LineWidth',1);
+hold on; v = vline(summary+se(meds),'k:'); set(v,'Color',color,'LineWidth',.5);
+hold on; v = vline(summary-se(meds),'k:'); set(v,'Color',color,'LineWidth',.5);
+
+
 % 
-txt = ['Peak = ' num2str(peak)];
-t = text(peak,yl(2)*.75,txt); set(t,'Color',color,'FontSize',12);
+txt = [whichSummary ' = ' num2str(summary)];
+t = text(summary,yl(2)*.75,txt); set(t,'Color',color,'FontSize',12);
+end
 
 hold on; vline(0,'k'); % zero line
 set(gca,'box','off'); axis square;% 
