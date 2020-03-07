@@ -28,7 +28,7 @@ an = struct('name',factNames,'levels',num2cell(levels(2:end)));
 if printOut
     disp('   ');
     for n = 1:length(an)
-        fprintf('The number of levels [%s]:\t%2i\n', an(n).factor, an(n).levels); end
+        fprintf('The number of levels [%s]:\t%2i\n', an(n).name, an(n).levels); end
     fprintf('The number of subjects:      \t%2i\n\n', an(end).levels); end
 
 CT = (sum(X(:,1)))^2/length(X(:,1));  %correction term
