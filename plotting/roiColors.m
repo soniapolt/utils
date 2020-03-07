@@ -1,5 +1,8 @@
 function c = roiColors(roiNames)
 % now allow call to more than one color returned
+
+if ~iscell(roiNames) roiNames = {roiNames}; end % if we're giving a single ROI as a string
+
 rColors = {
     [255 30 122]/255    % V1 - pink
     [51 17 187]/255     % V2 - blue
