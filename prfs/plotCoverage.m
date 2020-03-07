@@ -1,5 +1,5 @@
-function h = plotCoverage(vox,color,leg,ppd,res,plotSize,alphaGain,sampleVox,centerMass,plotCirc)
-% function h = plotCoverage(vox,color,leg,ppd,res,plotSize,alphaGain,sampleVox,centerMass,plotCirc)
+function h = plotCoverage(vox,color,leg,ppd,res,plotSize,r2Gain,sampleVox,centerMass,plotCirc)
+% function h = plotCoverage(vox,color,leg,ppd,res,plotSize,r2Gain,sampleVox,centerMass,plotCirc)
 % vox is a structure of v voxels with  a params field
 % plotting only uses kay params, so seeting YDir to reseverse should be
 % sufficient
@@ -15,7 +15,7 @@ function h = plotCoverage(vox,color,leg,ppd,res,plotSize,alphaGain,sampleVox,cen
 sizeCol = [.15 .15 .15]; % color for lines demarcating pRF size (currently black/white)
 
 % set hem colors
-if size(color,1) == 1; color = [color;color*.25]; end%
+if size(color,1) == 1; color = [color;color];end % no longer auto-color hemispheres %*.25]; end%
 
 % default plot pRF size as an empty circle
 if ~exist('plotSize','var'); plotSize = 1; end
@@ -31,9 +31,13 @@ for v = 1:length(vox)
     end
     
     %%%% get alpha scaling for this voxel
-    if exist('alphaGain','var') && alphaGain % alpha scaling by the gain
-        a = vox(v).params(4); if a>5 a=5; end
-        a = a/5; % remember - alpha won't work on the linux machine for some reason!
+%     if exist('alphaGain','var') && alphaGain % alpha scaling by the gain
+%         a = vox(v).params(4); if a>5 a=5; end
+%         a = a/5; % remember - alpha won't work on the linux machine for some reason!
+%     else a = 1; end % no alpha scaling4
+    if exist('r2Gain','var') && r2Gain % alpha scaling by the gain
+        a = vox(v).r2/100;
+        a = a/2; % remember - alpha won't work on the linux machine for some reason!
     else a = 1; end % no alpha scaling4
     
     %%%% pull out exponent to use for size calculation

@@ -1,14 +1,21 @@
-function [areaDeg,centX, centY] = plotCovIm(covIm,res,ppd,showColorBar,plotCentroid,contourLines)
+function [areaDeg,boundary] = plotCovContour(covIm,res,ppd,color,showColorBar,plotCentroid)
 % separating out the making (either via bootstrapping or other) and
 % plotting of coverage
+if ~exist('contourLines','var') contourLines = [.5 .6 .7 .8 .9 1]; end
+if ~exist('color','var') || isempty(color) color = condColors(randi(20),1); end
+if ~exist('plotCentroid','var') plotCentroid = 1; end
 
-if ~exist('plotCentroid','var') plotCentroid = 0; end
-if ~exist('contourLines','var') contourLines = [.5 .75 .875]; end
-covIm = flipud(covIm); % fixes Y-axis discrepancy between prf fitting codes and matlab's plotting functions
+%covIm = flipud(covIm);
 
-imshow(covIm);
+[c,h] = contour(covIm,repmat(max(covIm(:)),1,length(contourLines)).*contourLines,...
+    'Color','w','LineWidth',1);
 
-set(gca,'visible','off'); colormap(mrvColorMaps('jet'));%('parula');%
+% label the levels 
+h.LevelList= round(h.LevelList,3);  %rounds levels to 2nd decimal place
+clabel(c,h,'LabelSpacing',2000,'Color','w');
+ 
+set(gca,'visible','off'); colormap(colorinterpolate([1 1 1; color; 0 0 0],10,1)); %colormap('parula');%
+caxis([0 1]);
 
 %%% concentric circles at each dva
 for n = floor([0:1:(res/ppd)/2])
@@ -21,16 +28,9 @@ hold on; hline(res/2,'k'); hold on; vline(res/2,'k');
 
 threshIm = im2bw(covIm,max(covIm(:))/2); % half-max of pRF coverage
 areaDeg = sum(threshIm(:))/(ppd*ppd);
-%b = bwboundaries(threshIm,4,'noholes');
-% for k=1:length(b)
-%     boundary = b{k}; hold on;
-% p = plot(boundary(:,2), boundary(:,1), 'Color','w','LineWidth',4);end
 
-hold on;  contour(covIm,repmat(max(covIm(:)),1,length(contourLines)).*contourLines,...
-    'Color','w','LineWidth',2); %clabel(c,h);
 
 if plotCentroid
-   %threshIm = im2bw(covIm,0); 
    props = regionprops(threshIm,covIm, 'WeightedCentroid'); 
 try   
     centX = props(1).WeightedCentroid(1); centY = -props(1).WeightedCentroid(2); 
@@ -39,6 +39,7 @@ catch
 end
    plot(centX,-centY,'w.','MarkerSize',15);
 end
+
 
 axis square;
 
@@ -50,4 +51,3 @@ c = colorbar('FontSize',10,'Box','off','Position',barpos);
 end
 brighten(-.5);
 end
-
