@@ -25,7 +25,6 @@ summary = nanmean(meds); whichSummary = 'Median Avg.';
 h = shadedErrorBar(edges,mcount,se(counts),color); hold on;
 yl = ylim;
 
-
 if plotSummary
 hold on; vv = vline(summary,'k'); set(vv,'Color',color,'LineWidth',1);
 hold on; v = vline(summary+se(meds),'k:'); set(v,'Color',color,'LineWidth',.5);
