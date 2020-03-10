@@ -1,9 +1,13 @@
-function s = scatterCent(x,y,color,xlab,ylab,titleTx,fontSize,equalLims,line)
+function s = scatterCent(x,y,color,xlab,ylab,titleTx,fontSize,equalLims,line,alpha)
 % scatterplot with centroid & std
 % if whichLine == 1, plot ID line; if whichLine == 2, plot lsqfit line
 
-s = scatter(x,y,10,'filled'); hold on;
-
+if ~exist('alpha','var')
+    s = scatter(x,y,5,'filled'); hold on;
+else
+    hold on;
+    s = scatterAlpha(x,y,alpha,color,5); hold on;
+end
 % centroid & std
 
 hold on;  errorbar2(nanmedian(x),nanmedian(y),nanstd(x)/sqrt(length(x)),'x','.-','Color',color*.5);%,'LineWidth',6,'MarkerSize',30);
