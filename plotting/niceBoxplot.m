@@ -6,11 +6,16 @@ axis square;
 
 if ~exist('colors','var')
     colors = [condColors(1); condColors(2)]; end
+
 if ~exist('plotData','var') plotData = 0; end
 
 b = boxplot(data,'labels',labels,'plotstyle','traditional','outliersize',.5,'jitter',.1,'widths',.3);%,'ColorGroup',colors);
 c = findobj(gca,'tag','Median'); d = findobj(gca,'tag','Box');
 e = findobj(gca,'tag','Upper Whisker'); f = findobj(gca,'tag','Lower Whisker'); 
+
+% fringe case where we're plotting two hems on the same axis
+if length(c) == 2*length(colors)
+    colors = [colors; colors]; end
 
 for x = 1:length(c) 
     set(c(x),'Color',colors(x,:)); set(d(x),'Color',colors(x,:)); 

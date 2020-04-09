@@ -1,6 +1,9 @@
 function fileNames = cleanFileNames(theDir,fileType)
 % returns a list of fileNames, omitting weird apple files
 
+if ~exist('theDir','var') theDir = pwd; end
+if ~exist('fileType','var') fileType = ''; end
+
 full = dir([theDir '/*' fileType]);
 full = {full.name};
 c=1;

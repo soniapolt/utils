@@ -1,4 +1,5 @@
 function [hbar] = niceBars2(data,whichM,whichIndiv,xlab,color)
+% function [hbar] = niceBars2(data,whichM,whichIndiv,xlab,color)
 % unlike niceBars, which takes one mean & se value per condition, this lets
 % us work with the raw data itself & plot individual subject points, etc
 % wants a color for every bar
@@ -17,7 +18,9 @@ hbar = bar(n,m(n),.4); hold on;
 set(hbar,'facecolor',color(n,:),'edgecolor','none'); 
 
 % indiv subjects version 1
-if whichIndiv == 1 scatter(repmat(n,1,size(data,1)),data(:,n),40,subjCol,'filled'); hold on; end
+if whichIndiv == 1 scatter(repmat(n,1,size(data,1)),data(:,n),30,subjCol,'filled'); hold on; end
+% like version 1 but toned down for manuscript figures
+if whichIndiv == 3 scatter(repmat(n,1,size(data,1)),data(:,n),6,subjCol,'filled'); hold on; end
 
 end
 
@@ -31,7 +34,7 @@ end
 % error bars
 for n = 1:nBars
 h = errorbar(n, m(n),se(data(:,n)),'color',color(n,:)*.5,'linestyle', 'none'); hold on;
-set(h,'linewidth',5);  
+set(h,'linewidth',.5);  
 if ~verLessThan('matlab','9.4') h.CapSize = 0; end % remove horizontal ticks on errorbars   
 
 if exist('xlab','var') && ~isempty(xlab) % since xticklabels are stupid with this kind of plotting
@@ -39,5 +42,5 @@ if exist('xlab','var') && ~isempty(xlab) % since xticklabels are stupid with thi
     text(n+.1,m(n)+.5, xlab{n}); hold on; end
 end
 
-set(gca,'box','off'); 
+set(gca,'box','off','tickdir','out');
 end

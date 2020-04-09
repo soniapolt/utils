@@ -6,7 +6,7 @@ if ~exist('alpha','var')
     s = scatter(x,y,5,'filled'); hold on;
 else
     hold on;
-    s = scatterAlpha(x,y,alpha,color,5); hold on;
+    s = scatterAlpha(x,y,alpha,color,2); hold on;
 end
 % centroid & std
 
