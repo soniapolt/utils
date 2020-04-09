@@ -27,7 +27,7 @@ areaDeg = sum(threshIm(:))/(ppd*ppd);
 % p = plot(boundary(:,2), boundary(:,1), 'Color','w','LineWidth',4);end
 
 hold on;  contour(covIm,repmat(max(covIm(:)),1,length(contourLines)).*contourLines,...
-    'Color','w','LineWidth',2); %clabel(c,h);
+    'Color','w','LineWidth',1); %clabel(c,h);
 
 if plotCentroid
    %threshIm = im2bw(covIm,0); 
@@ -37,7 +37,8 @@ try
 catch 
     centX = NaN; centY = NaN;
 end
-   plot(centX,-centY,'w.','MarkerSize',15);
+   plot(centX,-centY,'w.','MarkerSize',5);
+else centX = NaN; centY = NaN;
 end
 
 axis square;

@@ -43,6 +43,8 @@ covIm = zeros(boot.numIters,size(allPRFs,2),size(allPRFs,3));
             cov = max(cov);
         case 'mean'
             cov = mean(cov);
+        case 'binary'
+            cov = mean(cov);
     end
     end
     
