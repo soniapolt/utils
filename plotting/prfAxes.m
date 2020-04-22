@@ -1,4 +1,5 @@
 function prfAxes(ppd,res,fov)
+% function prfAxes(ppd,res,fov)
 % sets up axes for retinotopic plots, e.g. prfRec output
 if ~exist('fov','var') fov = 5; end
 

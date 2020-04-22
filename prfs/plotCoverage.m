@@ -1,7 +1,7 @@
 function h = plotCoverage(vox,color,leg,ppd,res,plotSize,r2Gain,sampleVox,centerMass,plotCirc)
 % function h = plotCoverage(vox,color,leg,ppd,res,plotSize,r2Gain,sampleVox,centerMass,plotCirc)
 % vox is a structure of v voxels with  a params field
-% plotting only uses kay params, so seeting YDir to reseverse should be
+% plotting only uses kay params, so setting YDir to reseverse should be
 % sufficient
 % uses a few knkutils functions for the colorbar generation -
 % https://github.com/kendrickkay/knkutils
