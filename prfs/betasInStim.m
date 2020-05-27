@@ -7,7 +7,7 @@ if ~exist('clim','var')|| isempty(clim)
 end
 caxis(clim);
 
-if ~exist('cmap','var'); cmap = brighten(colormap('jet'),.5); end
+cmap = colormap('parula'); % cmap = brighten(colormap('jet'),.5); 
 if ~exist('addLines','var') addLines = 0 ; end
 
 im.grid = size(data,1);
