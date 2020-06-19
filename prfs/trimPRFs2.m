@@ -1,4 +1,6 @@
 function [trim] = trimPRFs2(vox,ppd,res)
+%function [trim] = trimPRFs2(vox,ppd,res)
+
 %%% trims pRFs in a consistent way
 % limits param values to something reasonable
 % requires at least one positive beta for each condition (voxel responds

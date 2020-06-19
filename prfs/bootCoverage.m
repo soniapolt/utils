@@ -1,7 +1,10 @@
 
-function [boot] = bootCoverage(vox,method,iters,propVox,doNorm)
+function [boot] = bootCoverage(vox,method,iters,propVox,doNorm,szMult)
 % vox is a structure of v voxels with a params field
 % in this version, voxel number is given as a proportion and not a constant
+
+if ~exist('szMult','var') szMult = 1; end
+
 
 boot.numIters = iters;
 boot.propVox = propVox;
@@ -10,6 +13,7 @@ boot.ppd = 10;
 boot.res = 11 * boot.ppd;
 boot.method = method; % 'max' or 'mean' or 'binary'
 boot.rescale = doNorm; % rescale to 1 to 0
+boot.szMult = szMult;
 
 [X,Y]=meshgrid(-boot.res/2:boot.res/2,-boot.res/2:boot.res/2);
 
