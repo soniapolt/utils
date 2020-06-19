@@ -2,6 +2,7 @@ function [fileName] = pRFfile(exptDir,expt,R2cutoff,whichStim,whichModel,hems,fi
 % file naming convention for pre-filtered pRFs
 if ~exist('task','var') task = '';end
 if ~exist('fitSuffix','var') fitSuffix = ''; elseif ~isempty(fitSuffix) fitSuffix = ['_' fitSuffix]; end
+if ~iscell(hems) hems = {hems}; end
 
 fileDir = fullfile(exptDir,expt,'prfSets');
 checkDir(fileDir);
