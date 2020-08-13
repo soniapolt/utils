@@ -11,8 +11,8 @@
 
 im.which = 2; %
 im.name = {'binary' 'photo' 'edge' 'other edge' 'internal'};
-im.stims = 'external.mat';
-im.saveName = 'extAvg.mat';
+im.stims = 'outline.mat';
+im.saveName = 'outlineAvg.mat';
 
 load(im.stims);
 
@@ -55,8 +55,9 @@ else
 end
 
 subplot(1,2,2); imagesc(avgFace); title(['Average Face, ' im.saveName]);
+if max(avgFace(:)) > 1 avgFace = avgFace./255; end
 
-%save(['stimuli/' im.saveName],'avgFace');
+save([im.saveName],'avgFace');
 %implay(condIms);
 subplot(1,2,2); imshow(avgFace); title(im.name{im.which});
 %end
