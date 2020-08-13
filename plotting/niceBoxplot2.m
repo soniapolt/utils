@@ -1,13 +1,13 @@
-function b = niceBoxplot(data,labels,plotMed,colors,cutY,plotData)
+function b = niceBoxplot2(data,labels,plotMed,dotColors,cutY,plotData)
 % colors needs to be in n-by-3 matrix
 % plotMed will label the medians
 % cutY sets a ylimit
-axis square;
+% version 2 is manuscript coloring
 
-if ~exist('colors','var')
-    colors = [condColors(1); condColors(2)]; end
+colors = repmat([white*.3;white*.8],size(data,2),1);
 
 if ~exist('plotData','var') plotData = 0; end
+
 
 b = boxplot(data,'labels',labels,'plotstyle','traditional','outliersize',.5,'jitter',.1,'widths',.3);%,'ColorGroup',colors);
 c = findobj(gca,'tag','Median'); d = findobj(gca,'tag','Box');
@@ -17,22 +17,29 @@ e = findobj(gca,'tag','Upper Whisker'); f = findobj(gca,'tag','Lower Whisker');
 if length(c) == 2*length(colors)
     colors = [colors; colors]; end
 
-
+% non-filled bars
 for x = 1:length(c) 
-    set(c(x),'Color',colors(x,:)); set(d(x),'Color',colors(x,:)); 
-    set(e(x),'LineStyle','-','Color',colors(x,:)*.5); 
-    set(f(x),'LineStyle','-','Color',colors(x,:)*.5); 
+    set(d(x),'Color',colors(x,:),'LineWidth',.5); 
+    %patch(get(d(x),'XData'),get(d(x),'YData'),'Color','None');
+    set(c(x),'Color',colors(x,:)*.8,'LineWidth',.3);
+    set(e(x),'LineStyle','-','Color',colors(x,:),'LineWidth',.2); 
+    set(f(x),'LineStyle','-','Color',colors(x,:),'LineWidth',.2); 
 end
+
+% filled light/dark grey bars
+% for x = 1:length(c) 
+%     set(d(x),'LineStyle','none'); 
+%     patch(get(d(x),'XData'),get(d(x),'YData'),colors(x,:),'FaceAlpha',1,'LineStyle','none');
+%     set(c(x),'Color',black);
+%     set(e(x),'LineStyle','-','Color',black,'LineWidth',.2); 
+%     set(f(x),'LineStyle','-','Color',black,'LineWidth',.2); 
+% end
 
 delete(findobj(gca,'Tag','Upper Adjacent Value'));delete(findobj(gca,'Tag','Lower Adjacent Value'));
 
 if plotData 
-   hold on; plot(1:size(data,2),data,'k.')
+   hold on; scatter(Expand(1:size(data,2),size(data,1),1)',reshape(data,[],1),3,flipud(Expand(dotColors,1,size(data,1))),'filled')
 end
-% if plotData 
-%    hold on; scatter(Expand(1:size(data,2),size(data,1),1)',reshape(data,[],1),3,flipud(Expand(colors,1,size(data,1))),'filled')
-% end
-
 
 h = findobj(gca,'tag','Outliers');
 set(h,'MarkerEdgeColor',[.5 .5 .5]);
