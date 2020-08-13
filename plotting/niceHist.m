@@ -1,4 +1,5 @@
 function niceHist(data,colors,plotMed)
+% function niceHist(data,colors,plotMed)
 % data should be size (observations, group) or vector
 % well-colored histogram plot with option to plot a line at its median;
 % default plots a line at 0
