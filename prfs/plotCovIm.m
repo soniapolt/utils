@@ -33,11 +33,11 @@ if plotCentroid
    %threshIm = im2bw(covIm,0); 
    props = regionprops(threshIm,covIm, 'WeightedCentroid'); 
 try   
-    centX = props(1).WeightedCentroid(1); centY = -props(1).WeightedCentroid(2); 
+    centX = props(1).WeightedCentroid(1); centY = props(1).WeightedCentroid(2); 
 catch 
     centX = NaN; centY = NaN;
 end
-   plot(centX,-centY,'w.','MarkerSize',5);
+   plot(centX,centY,'w.','MarkerSize',5);
 else centX = NaN; centY = NaN;
 end
 

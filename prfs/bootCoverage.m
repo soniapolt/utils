@@ -1,16 +1,16 @@
 
-function [boot] = bootCoverage(vox,method,iters,propVox,doNorm,szMult)
+function [boot] = bootCoverage(vox,method,iters,propVox,doNorm,szMult,screenDiam)
 % vox is a structure of v voxels with a params field
 % in this version, voxel number is given as a proportion and not a constant
 
 if ~exist('szMult','var') szMult = 1; end
-
+if ~exist('screenDiam','var') screenDiam = 11; end
 
 boot.numIters = iters;
 boot.propVox = propVox;
 boot.numVox = round(propVox * length(vox));
 boot.ppd = 10;
-boot.res = 11 * boot.ppd;
+boot.res = screenDiam * boot.ppd;
 boot.method = method; % 'max' or 'mean' or 'binary'
 boot.rescale = doNorm; % rescale to 1 to 0
 boot.szMult = szMult;
@@ -21,9 +21,9 @@ boot.szMult = szMult;
 
 for v = 1:length(vox)
     if ~strcmp(boot.method,'binary')
-    allPRFs(v,:,:) = PRF(X,Y,vox(v).XYdeg(1)*boot.ppd,vox(v).XYdeg(2)*boot.ppd,vox(v).size*boot.ppd);
+    allPRFs(v,:,:) = PRF(X,Y,vox(v).XYdeg(1)*boot.ppd,vox(v).XYdeg(2)*boot.ppd,vox(v).size*boot.ppd*boot.szMult);
     else
-        allPRFs(v,:,:) = (sqrt((X - vox(v).XYdeg(1)*boot.ppd).^2 + (Y - vox(v).XYdeg(2)*boot.ppd).^2) <= vox(v).size*boot.ppd);
+        allPRFs(v,:,:) = (sqrt((X - vox(v).XYdeg(1)*boot.ppd).^2 + (Y - vox(v).XYdeg(2)*boot.ppd).^2) <= vox(v).size*boot.ppd*boot.szMult);
     end   
         % sanity checking that these methods are the same:
 %         a = PRF(X,Y,vox(v).XYdeg(1)*boot.ppd,vox(v).XYdeg(2)*boot.ppd,vox(v).size*boot.ppd);
