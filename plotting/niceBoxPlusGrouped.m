@@ -4,8 +4,8 @@ function e = niceBoxPlusGrouped(data,ROIs,conds,dotColors,cutY,plotData,offsetDa
 % assumes data grouping like in niceBoxPlotGrouped, eg. V1-upr, V1-inv,
 % V2-upr, V2-inv and so on
 
-if length(conds) == 1
-    colors = repmat([lighter(black,30)],length(ROIs),1);
+if length(conds) ~=2
+    colors = repmat([lighter(black,30)],length(ROIs)*length(conds),1);
 else
 colors = repmat([lighter(black,70);lighter(black,30)],length(ROIs),1);
 end

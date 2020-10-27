@@ -8,7 +8,7 @@ if ~exist('markerSize','var') markerSize = 30; end
 scatter(x,y,markerSize,colors,'filled'); hold on;
 
 for k = 1:length(y)
-    e1 = errorbar(x(k),y(k),err(k),'LineStyle','None','LineWidth',1.5); hold on;
+    e1 = errorbar(x(k),y(k),err(k),'LineStyle','None','LineWidth',1); hold on;
     set(e1,'Color',colors(k,:));
     set(e1,'MarkerEdgeColor',colors(k,:));
     e1.CapSize = 0;

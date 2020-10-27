@@ -1,7 +1,7 @@
 function thisROI = vpnlROI(thisROI,subj,expt)
 
 % commonly used subjects and ROI specifications
-if ~exist('expt','var') || ~strcmp(expt,'invPRF3') % defaults
+if ~exist('expt','var') || strcmp(expt,'fixPRF') % defaults
     expt = 'defaults';
     initials = {'JG'            'SP'                'EM'            'AS'        'TH'            'AR'            'MN'            'DF'            'MG'            'MH'            'JP'        'JJ'            'JC'            'JW'            'MZ'};
     ret = {     'toonRet_f_'    'toonRet_f_'        'toonRet_f_'    'wfCSS_f_'  'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'longi_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'    'toonRet_f_'};
@@ -10,6 +10,10 @@ if ~exist('expt','var') || ~strcmp(expt,'invPRF3') % defaults
     
 else
     switch expt
+        case 'compPRF'
+            initials = {'DF'            'EM'               'JG'             'MG'            'SP'            'TH'        };
+            ret = {     'toonRet_f_'    'toonRet_f_'       'toonRet_f_'     'toonRet_f_'    'toonRet_f_'    'toonRet_f_'   };
+            face = {    'latprf_f_'     'latprf_f_'        'latprf_f_'      'latprf_f_'     'latprf_f_'     'fLoc_f_'    };
         case 'invPRF3'
             initials = {'JG'            'SP'        'MG'            'DF'        };
             ret = {     'wfCSS_f_'      'f_'        'wfCSS_f_'      'wfCSS_f_'  };
