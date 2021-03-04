@@ -28,6 +28,8 @@ samples = textscan(fid, '%s %s %s %s %s');
 
 % raw{1} stores time, raw{2} stores x coordinate, and raw{3} stores y
 % coordinate. We won't use raw{4} or raw{5}, so they get deleted here.
+% raw(:,4) gives the distance between the eye's position from
+% the center of the screen in dva (according to AR's asc2rawMat_sample.m)
 samples(:,4:5) = [];
 
 % Reorganize raw into a matrix of doubles
