@@ -5,14 +5,18 @@ function niceHist(data,colors,plotMed)
 % default plots a line at 0
 % now lets us plot multiple histograms on the same axis
 if size(data,1) == 1 data = data'; end
+if~exist('colors','var'); colors = black; end
 
 for c = 1:size(data,2)
 hold on; hist(data(:,c),100);
 h = findobj(gca,'Type','patch');
-set(h(1),'FaceColor',colors(c,:),'FaceAlpha',1,'EdgeAlpha',0);
+set(h(1),'FaceColor',colors(c,:),'FaceAlpha',.6,'EdgeAlpha',0);
 
 if exist('plotMed','var') && plotMed
-vv = vline(nanmedian(data(:,c)),'k:',['Med = ' num2str(nanmedian(data(:,c)))]); set(vv,'Color',colors(c,:),'LineWidth',2);
+vv = vline(nanmedian(data(:,c)),'k:',['Med = ' num2str(nanmedian(data(:,c)))]); 
+if length(colors) > 1 set(vv,'Color',colors(c,:),'LineWidth',2); else
+    set(vv,'LineWidth',2); end
+
 end
 
 end

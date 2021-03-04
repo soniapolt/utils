@@ -1,5 +1,5 @@
 
-function [h,ms,counts] =  plotMeanDistr(cData,nBins,color,plotSummary,whichM)
+function [h,ms,counts] =  plotMeanDistr_setbins(cData,binSize,color,plotSummary,whichM)
 % function plotMeanDistr(cData,nBins,color,whichM)
 % data is in form pars{s,c} so we preserve the distribution for each
 % subject
@@ -11,9 +11,8 @@ function [h,ms,counts] =  plotMeanDistr(cData,nBins,color,plotSummary,whichM)
 
 %cData = sPars(:,c);
 if ~exist('plotSummary','var') plotSummary = 0; end
-if ~exist('nBins','var') nBins = 100; end
 
-edges = linspace(min(min([cData{:}])),max(max([cData{:}])),nBins);
+edges = [floor(min(min([cData{:}]))):binSize:ceil(max(max([cData{:}])))];
 for s = 1:length(cData)
     [counts(s,:),bin{s}] =  histc(cData{s},edges);
     % normalize within subjects

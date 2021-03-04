@@ -35,7 +35,7 @@ for n = 1:numPlots-1
 end
 
 if ~isempty(dataDescr)
-t = title([dataDescr ' in Image Space']);
+t = title([ ' in Image Space']);
 set(t,'visible','on');
 end
 
