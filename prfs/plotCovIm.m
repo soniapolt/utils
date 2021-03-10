@@ -8,7 +8,7 @@ covIm = flipud(covIm); % fixes Y-axis discrepancy between prf fitting codes and 
 
 imshow(covIm);
 
-set(gca,'visible','off'); colormap(mrvColorMaps('jet'));%('parula');%
+set(gca,'visible','off'); colormap('jet');%colormap(mrvColorMaps('jet'));%('parula');%
 
 %%% concentric circles at each dva
 for n = floor([0:1:(res/ppd)/2])
