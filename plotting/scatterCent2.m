@@ -10,6 +10,7 @@ else
     s = scatterAlpha(x,y,alpha,'k',2); hold on;
 end
 % centroid & std
+if length(colors) == 1 colors{2} = colors{1}; end
 
 hold on;  h = hline(nanmean(y)); set(h,'Color',colors{1},'linestyle','-','linewidth',1.5);
 hold on;  v = vline(nanmean(x)); set(v,'Color',colors{2},'linestyle','-','linewidth',1.5);
