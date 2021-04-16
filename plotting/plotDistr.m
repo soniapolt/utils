@@ -1,4 +1,4 @@
-function plotDistr(condData,whichPlot,condNames,nBins,whichM,doKS)
+function plotDistr(condData,whichPlot,condNames,nBins,whichM,doKS,dark)
 % plots a distribution of some value (like XY shift) over subjects, keeping
 % subject data separate but on the same scale
 % subjData{s} is a cell containting the data to be plotted
@@ -25,6 +25,7 @@ if whichPlot == 1 || whichPlot ==3
     yl = ylim;
     for s = 1:length(condData)
         color = condColors(s+3,1);
+        if dark color = darker(color); end
         set(pl(s),'color',color,'LineWidth',2.5);
         
         if whichM == 1 % mean
