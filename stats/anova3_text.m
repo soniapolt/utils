@@ -8,7 +8,7 @@ function anova_text(fid,result,test)
     main.s = []; main.ns = []; int.s = []; int.ns=[];
     for n = 1:length(result)
         
-            text = sprintf('%s, F(%d,%d)=%.2f, p=%.3f.\n',result(n).name,result(n).df(1),result(n).df(2),result(n).F,result(n).p);
+            text = sprintf('%s, F(%d,%d)=%.8f, p=%.8f.\n',result(n).name,result(n).df(1),result(n).df(2),result(n).F,result(n).p);
         if strcmp(result(n).type,'main')
             if result(n).h
         main.s = [main.s text];

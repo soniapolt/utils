@@ -9,7 +9,7 @@ main.s = []; main.ns = []; int.s = []; int.ns=[];
 
 for n = 2:4
     
-    text = sprintf('%s, F(%d)=%.2f, p=%.3f.\n',result{n,1},result{n,3},result{n,5},result{n,6});
+    text = sprintf('%s, F(%d)=%.8f, p=%.8f.\n',result{n,1},result{n,3},result{n,5},result{n,6});
     if ~containsTxt(result{n,1},' x ')
         if result{n,6} < .05
             main.s = [main.s text];
