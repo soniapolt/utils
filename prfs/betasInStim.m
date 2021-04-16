@@ -1,4 +1,4 @@
-function im = betasInStim(data,ppd,gridSpace,faceSize,clim,addLines)
+function im = betasInStim(data,ppd,gridSpace,faceSize,clim,addLines,cmap,cbar)
 % for the pRF mapping experiments, more accurately plots beta values at
 % stimulus position (including overlap)
 if ~exist('clim','var')|| isempty(clim)
@@ -6,9 +6,11 @@ if ~exist('clim','var')|| isempty(clim)
     clim = [-max(clim) max(clim)];
 end
 caxis(clim);
-
+if ~exist('cmap','var') || isempty(cmap)
 cmap = colormap('parula'); % cmap = brighten(colormap('jet'),.5); 
+end
 if ~exist('addLines','var') addLines = 0 ; end
+if ~exist('cbar','var') || isempty(cmap) cbar = 1; end
 
 im.grid = size(data,1);
 im.size = round(ppd*((im.grid-1)*gridSpace+faceSize));
@@ -63,7 +65,9 @@ set(gca,'XTick',[],'YTick',[]);
 % set colorbar
 %pos = get(gca,'Position'); %[left, bottom, width, height].
 %barpos =  [pos(1)+pos(3)+.01, pos(2), .01, pos(4)];
+if cbar
 c = colorbar('FontSize',12,'Box','off');%,'Position',barpos);
+end
 
 h= hline(im.size/2,'k');v=vline(im.size/2,'k');%set(h,'LineWidth',2);set(v,'LineWidth',2);
 for n = 1:5
