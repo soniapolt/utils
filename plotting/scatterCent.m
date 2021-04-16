@@ -3,7 +3,7 @@ function s = scatterCent(x,y,color,xlab,ylab,titleTx,fontSize,equalLims,line,alp
 % if whichLine == 1, plot ID line; if whichLine == 2, plot lsqfit line
 
 if ~exist('alpha','var')
-    s = scatter(x,y,5,'filled'); hold on;
+    s = scatter(x,y,5,'filled','k'); hold on;
 else
     hold on;
     s = scatterAlpha(x,y,alpha,color,2); hold on;
