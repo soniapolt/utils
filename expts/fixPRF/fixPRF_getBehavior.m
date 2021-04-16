@@ -13,7 +13,11 @@ if ~exist([saveDir '/' session '_behav.mat']) || exist('reload','var')
     stim = struct('cond',{'Inverted' 'Upright' 'Blank'},'pos',c);
     
     for n = 1:numRuns
+        try
         load([behavDir 'fixPRF_' num2str(n) '.mat'],'perf','trial','condition');
+        catch
+         load([exptDir '/' session '/' 'fixPRF_' num2str(n) '.mat'],'perf','trial','condition');   % for github-invPRD
+        end
         if ~isempty([perf.hitTr]) % if performance is 0, we assume that this run is just a scanner error, and don't record any part of it
             hitsMisses = {[trial([perf.hitTr]).cond];[trial([perf.missTr]).cond]};
             pf = [1 0];
